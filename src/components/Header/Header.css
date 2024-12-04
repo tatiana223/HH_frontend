@@ -1,0 +1,68 @@
+:root {
+    --header-bg: rgba(236, 61, 46, 0.59);
+    --header-color: #fff;
+    --logo-bg: #CF0000; /* Красный цвет для фона логотипа */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+}
+.navbar {
+    background-color: var(--header-bg); /* Фоновый цвет хедера */
+    background-image: linear-gradient(to bottom, rgba(51, 51, 51, 0.5), rgba(51, 51, 51, 0.5)), url("https://strategicfinancialpartners.com/wp-content/uploads/2019/09/Main-Page-Slider-Image-no3-V2-1.jpg");
+    background-size: cover; /* Картинка будет масштабироваться по размеру контейнера */
+    background-position: center; /* Картинка будет выравниваться по центру */
+    height: 150px; /* Высота хедера */
+    display: flex; /* Используем флексбокс для выравнивания содержимого */
+    justify-content: center; /* Центрируем все содержимое по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    padding: 0; /* Отступы внутри хедера */
+    box-sizing: border-box;
+    position: fixed; /* Фиксированное положение */
+    top: 0; /* Привязываем к верхней части страницы */
+    width: 100%; /* Ширина на всю страницу */
+    z-index: 100; /* Устанавливаем высокий приоритет, чтобы хедер был поверх других элементов */
+}
+
+.logo-container {
+    display: flex; /* Используем флекс для выравнивания логотипа и текста */
+    align-items: center; /* Вертикальное выравнивание */
+    gap: 10px; /* Уменьшаем расстояние между логотипом и текстом */
+}
+
+.logo {
+    width: 57px; /* Ширина логотипа */
+    height: 57px; /* Высота логотипа */
+    background-color: var(--logo-bg); /* Красный фон для логотипа */
+    border-radius: 50%; /* Делаем логотип круглым */
+    display: flex; /* Используем флекс для выравнивания текста внутри логотипа */
+    align-items: center; /* Вертикальное выравнивание */
+    justify-content: center; /* Горизонтальное выравнивание */
+    color: white; /* Белый цвет для текста в логотипе */
+    font-family: 'Arial', sans-serif; /* Шрифт для текста */
+    font-weight: bold; /* Жирный шрифт */
+    font-size: 25px; /* Размер текста */
+}
+
+.logo-text {
+    font-size: 24px; /* Уменьшаем размер шрифта для текста */
+    font-weight: bold; /* Жирный шрифт */
+    color: var(--header-color); /* Цвет текста */
+}
+
+
+.home-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px; /* Ширина кнопки */
+    height: 52px; /* Высота кнопки */
+}
+
+.home-btn img {
+    height: 100%; /* Картинка будет растягиваться по высоте */
+    object-fit: cover; /* Картинка будет покрывать всю область кнопки */
+}

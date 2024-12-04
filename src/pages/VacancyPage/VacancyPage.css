@@ -1,0 +1,72 @@
+/* Центрируем блоки с загрузкой */
+.vacancy_page_loader_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff; /* Цвет фона, чтобы контент не был на белом фоне при загрузке */
+}
+
+
+.info {
+    margin-top: 40px !important; /* Применяем отступ сверху с !important */
+    margin-bottom: 211px !important;
+}
+
+.vacancy-image {
+    margin-top: -200px; /* Убираем лишний отступ сверху, можно регулировать */
+    margin-bottom: 40px; /* Меньше отступ снизу */
+    padding-bottom: 0px; /* Если есть паддинг, обнуляем */
+    box-sizing: border-box;
+}
+
+.vacancy-image img {
+    width: 60%; /* Задаем ширину картинки в процентах от родительского контейнера */
+    max-width: 600px; /* Максимальная ширина картинки */
+    height: auto; /* Высота автоматически подстраивается */
+    object-fit: cover; /* Сохранение пропорций при обрезке */
+}
+/* Контейнер страницы города */
+.vacancy-page-container {
+    background-color: #ffffff;
+    max-width: 1000%;
+    width: 100vw;
+    padding: 40px 20px 0px 10px; /* Адаптированные отступы для мобильных */
+    box-sizing: border-box; /* Чтобы padding не выходил за пределы */
+}
+
+
+/* Подзаголовок города */
+.vacancy_content h5 {
+    font-weight: normal;
+    font-size: 20px;
+    color: #393939;
+    max-width: 100%; /* Разрешаем ширине расти, чтобы подстраиваться под родителя */
+    line-height: 1.5; /* Увеличил расстояние между строками для лучшего восприятия */
+    margin: 0 auto;
+    text-align: center; /* Центрируем текст */
+}
+
+
+.info-text p {
+    font-weight: 700 !important;
+    margin-bottom: 1.5px !important;
+    letter-spacing: 0 !important;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .city-content h1 {
+        font-size: 30px; /* Уменьшаем размер заголовка на мобильных */
+        line-height: 40px;
+    }
+
+    .city_content h5 {
+        font-size: 16px; /* Уменьшаем размер подзаголовка */
+    }
+
+
+    .city-page-container {
+        padding: 30px 10px; /* Меньше отступы на мобильных устройствах */
+    }
+}

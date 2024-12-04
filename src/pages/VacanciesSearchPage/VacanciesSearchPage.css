@@ -1,0 +1,121 @@
+.containerLoading {
+  display: flex;
+  align-items: center; /* Центрирует по вертикали */
+  justify-content: center; /* Центрирует по горизонтали */
+}
+
+.container-2 {
+  width: 100vw;
+  max-width: 100%;
+  position: relative;
+  top: 130px;
+}
+
+.vacancies-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.vacancies-title h1 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 44px;
+  color: black;
+  letter-spacing: -0.01em; /* Отрицательное значение для уменьшения интервала между буквами */
+  width: 582px;
+  height: 102px;
+  text-align: center;
+}
+
+.vacancies-and-search {
+  background-color: #ffffff;
+  width: 100%;
+  margin-left: -50px; /* Сдвиг блока влево */
+}
+
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 2fr));
+  gap: 150px;
+  justify-content: center;
+  width: 100%; /* Убедитесь, что контейнер имеет ширину 100% */
+  min-width: 0; /* позволяет избежать сжатия контента */
+  margin-top: 15px;
+}
+
+.vacancies-not-found h1 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 44px;
+  color: black;
+  letter-spacing: -0.01em; /* Отрицательное значение для уменьшения интервала между буквами */
+  width: 582px;
+  height: 102px;
+  text-align: left;
+}
+
+.btn-favorites{
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  justify-content: center; /* Выравнивание по горизонтали */
+  margin-top: 47px;
+  margin-left: -46px;
+}
+
+
+.badge {
+  top: -10px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  background-color: #1d0606;
+  color: white; /* Цвет текста */
+  font-family: 'Arial', sans-serif;
+  font-weight: bold; /* Жирный шрифт */
+  font-size: 18px; /* Размер шрифта */
+  display: flex;
+  align-items: center; /* Центрирует по вертикали */
+  justify-content: center; /* Центрирует по горизонтали */
+  text-align: center; /
+}
+
+/* Стиль для кнопки "Отклики" */
+.btn-danger {
+  background-color: rgb(232, 8, 8); /* Ярко-красный цвет кнопки */
+  color: white; /* Белый цвет текста */
+  border-radius: 10px; /* Закругленные углы */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  font-size: 16px; /* Размер текста */
+  width: 100%; /* Кнопка растянется по ширине */
+  margin-top: 10px; /* Отступ сверху */
+  margin-left: 80px; /* Отступ слева */
+  margin-right: auto; /* Выравнивание кнопки влево */
+  margin-bottom: 0px; /* Убираем отступ снизу */
+  position: relative; /* Для позиционирования бейджа */
+}
+
+.btn-danger:hover {
+  background-color: darkred; /* Темно-красный цвет при наведении */
+}
+
+/* Стиль для бейджа (кружка с количеством) */
+.badge {
+  background-color: #ff0000; /* Ярко-красный цвет фона бейджа */
+  color: white; /* Белый текст */
+  font-size: 12px; /* Размер текста внутри бейджа */
+  width: 20px; /* Ширина бейджа */
+  height: 20px; /* Высота бейджа */
+  border-radius: 50%; /* Круглая форма */
+  display: flex; /* Для выравнивания текста */
+  align-items: center; /* Центрирование текста по вертикали */
+  justify-content: center; /* Центрирование текста по горизонтали */
+  position: absolute; /* Абсолютное позиционирование относительно кнопки */
+  top: -5px; /* Смещение вверх */
+  right: -5px; /* Смещение вправо */
+}
