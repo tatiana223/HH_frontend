@@ -1,0 +1,68 @@
+.vacancy-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 0;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    flex: 0 0 550%; /* Карточка занимает 45% от ширины родителя */
+    max-width: 1000px;
+    height: 250px; /* Фиксированная высота карточки */
+    margin: 10px;
+    margin-bottom: -100px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Для позиционирования картинки внутри карточки */
+    padding-top: 0px; /* Чтобы текст начинался ниже от верхнего края */
+}
+
+.vacancy-card-img {
+    position: absolute; /* Позиционируем картинку */
+    top: 20px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    width: 200px; /* Ширина изображения */
+    height: 0px; /* Высота изображения */
+    object-fit: cover; /* Обрезаем изображение по краям */
+    border-radius: 5px; /* Закругленные углы картинки */
+}
+
+.vacancy-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 10px; /* Меньше отступа для текста */
+}
+
+.vacancy-name {
+    font-size: 30px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.vacancy-info {
+    margin-bottom: 15px;
+}
+
+.vacancy-btn {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.vacancy-btn:hover {
+    background-color: #0056b3;
+}

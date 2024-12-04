@@ -1,0 +1,114 @@
+/* Общий контейнер */
+.container-1 {
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 0px; /* Убрать боковые отступы, например, из Bootstrap */
+    margin-right: 750px;
+    padding-top: 50px;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Светло-серый фон */
+    color: #333; /* Основной текст серого цвета */
+    
+}
+
+/* Интро-блок */
+.intro {
+    width: 200%; /* Займет всю ширину экрана */
+    max-width: 1800px; /* Увеличьте максимальную ширину */
+    margin: 0 auto; /* Оставьте центрирование */
+    background-color: #ffffff; /* Белый фон */
+    padding: 100px; /* Увеличенный внутренний отступ */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+
+}
+
+/* Заголовок */
+.intro h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1e293b; /* Темный синий оттенок */
+    margin-bottom: 20px;
+}
+
+/* Параграф */
+.intro p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555; /* Темно-серый текст */
+    margin-bottom: 30px;
+}
+
+/* Кнопка */
+.to-vacancies-button {
+    background-color: #4061da; /* Синий, как в hh.ru */
+    border: none;
+    padding: 12px 24px;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.to-vacancies-button:hover {
+    background-color: #0f1064; /* Более темный синий при наведении */
+}
+
+/* Изображение */
+.intro-img {
+    max-width: 100%; /* Уменьшение размера до ширины контейнера */
+    height: auto; /* Сохранение пропорций */
+    border-radius: 10px; /* Скругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+}
+
+/* Текстовые блоки */
+.info {
+    background-color: #ffffff;
+    padding: 30px; /* Увеличенные внутренние отступы */
+    max-width: 100%; /* Растягиваем блок */
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.info-number {
+    background-color: #6b0f0f;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.info-text {
+    margin-left: 15px;
+    color: #555;
+    
+}
+
+/* Заголовки */
+.vacancy-page-container h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.vacancy-page-container h5 {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Лоадер */
+.vacancy-page-loader-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
