@@ -1,0 +1,22 @@
+{
+    "name": "Сервис для трудоустройства",
+    "short_name": "Трудоустройство",
+    "description": "Прогрессивное веб-приложение для трудоустройства людей с ограниченными возможностями.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "logo201.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "logo201.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  
