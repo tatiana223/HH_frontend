@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/HH_frontend/sw.js', { scope: '/HH_frontend/' })})}
