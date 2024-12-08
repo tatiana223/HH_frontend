@@ -1,6 +1,6 @@
 {
     "name": "Сервис для трудоустройства",
-    "short_name": "Трудоустройство",
+    "short_name": "HH",
     "description": "Прогрессивное веб-приложение для трудоустройства людей с ограниченными возможностями.",
     "start_url": "/",
     "display": "standalone",
@@ -9,14 +9,27 @@
     "icons": [
       {
         "src": "logo201.png",
-        "sizes": "192x192",
+        "sizes": "201x201",
         "type": "image/png"
       },
       {
-        "src": "logo201.png",
+        "src": "logo512.png",
         "sizes": "512x512",
         "type": "image/png"
       }
-    ]
-  }
+    ],
+    "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1627x800",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "630x1136",
+      "type": "image/png"
+    }
+  ]
+}
   
