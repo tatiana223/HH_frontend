@@ -54,19 +54,4 @@
     letter-spacing: 0 !important;
 }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    .city-content h1 {
-        font-size: 30px; /* Уменьшаем размер заголовка на мобильных */
-        line-height: 40px;
-    }
 
-    .city_content h5 {
-        font-size: 16px; /* Уменьшаем размер подзаголовка */
-    }
-
-
-    .city-page-container {
-        padding: 30px 10px; /* Меньше отступы на мобильных устройствах */
-    }
-}

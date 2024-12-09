@@ -10,6 +10,7 @@ html, body {
     overflow-x: hidden;
     width: 100%;
 }
+
 .navbar {
     background-color: var(--header-bg); /* Фоновый цвет хедера */
     background-image: linear-gradient(to bottom, rgba(51, 51, 51, 0.5), rgba(51, 51, 51, 0.5)), url("https://strategicfinancialpartners.com/wp-content/uploads/2019/09/Main-Page-Slider-Image-no3-V2-1.jpg");
@@ -53,7 +54,6 @@ html, body {
     color: var(--header-color); /* Цвет текста */
 }
 
-
 .home-btn {
     display: flex;
     align-items: center;
@@ -65,4 +65,57 @@ html, body {
 .home-btn img {
     height: 100%; /* Картинка будет растягиваться по высоте */
     object-fit: cover; /* Картинка будет покрывать всю область кнопки */
+}
+
+/* Адаптивность для мобильных экранов */
+@media screen and (max-width: 768px) {
+    .navbar {
+        height: 120px; /* Уменьшаем высоту хедера на мобильных */
+        padding: 10px; /* Добавляем отступы для хедера */
+    }
+
+    .logo {
+        width: 45px; /* Уменьшаем размер логотипа */
+        height: 45px; /* Уменьшаем размер логотипа */
+        font-size: 20px; /* Уменьшаем размер шрифта логотипа */
+    }
+
+    .logo-text {
+        font-size: 18px; /* Уменьшаем размер шрифта для текста */
+    }
+
+    .home-btn {
+        width: 45px; /* Уменьшаем размер кнопки */
+        height: 45px; /* Уменьшаем размер кнопки */
+    }
+
+    .home-btn img {
+        height: 80%; /* Уменьшаем размер изображения в кнопке */
+    }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .navbar {
+        height: 100px; /* Еще больше уменьшаем высоту хедера */
+    }
+
+    .logo {
+        width: 40px; /* Еще меньше логотип */
+        height: 40px; /* Еще меньше логотип */
+        font-size: 18px; /* Еще меньше текст логотипа */
+    }
+
+    .logo-text {
+        font-size: 16px; /* Еще меньше текст */
+    }
+
+    .home-btn {
+        width: 40px; /* Еще меньше кнопка */
+        height: 40px; /* Еще меньше кнопка */
+    }
+
+    .home-btn img {
+        height: 70%; /* Уменьшаем изображение в кнопке */
+    }
 }
