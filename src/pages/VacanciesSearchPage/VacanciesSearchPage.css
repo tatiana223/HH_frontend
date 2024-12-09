@@ -24,25 +24,23 @@
   font-weight: bold;
   font-size: 44px;
   color: black;
-  letter-spacing: -0.01em; /* Отрицательное значение для уменьшения интервала между буквами */
-  width: 582px;
-  height: 102px;
+  letter-spacing: -0.01em;
   text-align: center;
+  max-width: 100%;
 }
 
 .vacancies-and-search {
   background-color: #ffffff;
   width: 100%;
-  margin-left: -50px; /* Сдвиг блока влево */
+
 }
 
 .cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 2fr));
-  gap: 150px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Обновление на более гибкие карточки */
+  gap: 20px;
   justify-content: center;
-  width: 100%; /* Убедитесь, что контейнер имеет ширину 100% */
-  min-width: 0; /* позволяет избежать сжатия контента */
+  width: 100%;
   margin-top: 15px;
 }
 
@@ -51,71 +49,178 @@
   font-weight: bold;
   font-size: 44px;
   color: black;
-  letter-spacing: -0.01em; /* Отрицательное значение для уменьшения интервала между буквами */
-  width: 582px;
-  height: 102px;
+  letter-spacing: -0.01em;
   text-align: left;
 }
 
-.btn-favorites{
-  position: absolute;
-  width: 58px;
-  height: 58px;
+/* Стиль для карточек вакансий */
+.card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding: 20px;
   display: flex;
-  align-items: center; /* Выравнивание по вертикали */
-  justify-content: center; /* Выравнивание по горизонтали */
-  margin-top: 47px;
-  margin-left: -46px;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
+.card:hover {
+  transform: scale(1.05); /* Плавное увеличение карточки при наведении */
+}
 
-.badge {
-  top: -10px;
-  right: 5px;
-  width: 25px;
-  height: 25px;
-  background-color: #1d0606;
-  color: white; /* Цвет текста */
-  font-family: 'Arial', sans-serif;
-  font-weight: bold; /* Жирный шрифт */
-  font-size: 18px; /* Размер шрифта */
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-body {
   display: flex;
-  align-items: center; /* Центрирует по вертикали */
-  justify-content: center; /* Центрирует по горизонтали */
-  text-align: center; /
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card-description {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #555;
+  flex-grow: 1; /* Раздвигаем описание для адаптации */
+}
+
+.card-btn {
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.card-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Стиль для кнопки "Откликнуться" */
+.btn-favorites {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  position: relative;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.btn-favorites button {
+  background-color: #2368f0;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-favorites button:hover {
+  background-color: hsl(222, 76%, 48%);
 }
 
 /* Стиль для кнопки "Отклики" */
 .btn-danger {
-  background-color: rgb(232, 8, 8); /* Ярко-красный цвет кнопки */
-  color: white; /* Белый цвет текста */
-  border-radius: 10px; /* Закругленные углы */
-  padding: 10px 20px; /* Отступы внутри кнопки */
-  font-size: 16px; /* Размер текста */
-  width: 100%; /* Кнопка растянется по ширине */
-  margin-top: 10px; /* Отступ сверху */
-  margin-left: 80px; /* Отступ слева */
-  margin-right: auto; /* Выравнивание кнопки влево */
-  margin-bottom: 0px; /* Убираем отступ снизу */
-  position: relative; /* Для позиционирования бейджа */
+  background-color: #007bff; /* Синий фон */
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Плавное изменение фона и эффекта нажатия */
 }
 
-.btn-danger:hover {
-  background-color: darkred; /* Темно-красный цвет при наведении */
+
+
+
+/* Стиль для кнопки с добавлением бейджа */
+.btn-danger .badge {
+  background-color: #0056b3; /* Синий цвет бейджа */
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
 }
 
-/* Стиль для бейджа (кружка с количеством) */
-.badge {
-  background-color: #ff0000; /* Ярко-красный цвет фона бейджа */
-  color: white; /* Белый текст */
-  font-size: 12px; /* Размер текста внутри бейджа */
-  width: 20px; /* Ширина бейджа */
-  height: 20px; /* Высота бейджа */
-  border-radius: 50%; /* Круглая форма */
-  display: flex; /* Для выравнивания текста */
-  align-items: center; /* Центрирование текста по вертикали */
-  justify-content: center; /* Центрирование текста по горизонтали */
-  position: absolute; /* Абсолютное позиционирование относительно кнопки */
-  top: -5px; /* Смещение вверх */
-  right: -5px; /* Смещение вправо */
+
+
+/* Адаптивность для мобильных экранов */
+@media screen and (max-width: 768px) {
+  .cards-wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* Карточки занимают 100% ширины на мобильных экранах */
+    gap: 10px;
+  }
+
+  .card-img {
+    height: 150px; /* Уменьшаем высоту изображения на мобильных устройствах */
+  }
+
+  .card-title {
+    font-size: 1.2rem; /* Уменьшаем размер заголовка на мобильных */
+  }
+
+  .card-description {
+    font-size: 0.9rem; /* Уменьшаем размер описания */
+  }
+
+  .card-btn {
+    font-size: 14px; /* Уменьшаем размер шрифта для кнопки */
+  }
+
+  .btn-favorites {
+    margin-top: 10px; /* Уменьшаем отступы кнопок */
+  }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+  .card-title {
+    font-size: 1rem; /* Еще меньше шрифт для заголовков */
+  }
+
+  .card-description {
+    font-size: 0.8rem; /* Уменьшаем шрифт для описания */
+  }
+
+  .card-btn {
+    font-size: 12px; /* Уменьшаем размер кнопки */
+    padding: 6px 12px; /* Уменьшаем отступы внутри кнопки */
+  }
 }

@@ -1,77 +1,98 @@
 /* Общий контейнер */
 .container-1 {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 50px;
-    margin-left: 0px; /* Убрать боковые отступы, например, из Bootstrap */
-    margin-right: 750px;
+    margin-top: 100px; /* Отступ сверху для того, чтобы контейнер не перекрывался с хедером */
+    margin-left: 0px;
+    margin-right: 0px;
     padding-top: 50px;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Светло-серый фон */
-    color: #333; /* Основной текст серого цвета */
-    
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Интро-блок */
 .intro {
-    width: 200%; /* Займет всю ширину экрана */
-    max-width: 1800px; /* Увеличьте максимальную ширину */
-    margin: 0 auto; /* Оставьте центрирование */
-    background-color: #ffffff; /* Белый фон */
-    padding: 100px; /* Увеличенный внутренний отступ */
-    border-radius: 10px; /* Скругленные углы */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 60px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
 
+.intro:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Заголовок */
 .intro h1 {
-    font-size: 32px;
-    font-weight: bold;
-    color: #1e293b; /* Темный синий оттенок */
+    font-size: 36px;
+    font-weight: 600;
+    color: #1e293b;
     margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 /* Параграф */
 .intro p {
     font-size: 18px;
-    line-height: 1.8;
-    color: #555; /* Темно-серый текст */
+    line-height: 1.7;
+    color: #555;
     margin-bottom: 30px;
 }
 
 /* Кнопка */
 .to-vacancies-button {
-    background-color: #4061da; /* Синий, как в hh.ru */
+    background-color: #4061da;
     border: none;
     padding: 12px 24px;
     color: #ffffff;
     font-size: 16px;
+    font-weight: bold;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .to-vacancies-button:hover {
-    background-color: #0f1064; /* Более темный синий при наведении */
+    background-color: #0f1064;
+    transform: scale(1.05);
+}
+
+.to-vacancies-button:active {
+    background-color: #0b0d4b;
 }
 
 /* Изображение */
 .intro-img {
-    max-width: 100%; /* Уменьшение размера до ширины контейнера */
-    height: auto; /* Сохранение пропорций */
-    border-radius: 10px; /* Скругление углов */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 /* Текстовые блоки */
 .info {
     background-color: #ffffff;
-    padding: 30px; /* Увеличенные внутренние отступы */
-    max-width: 100%; /* Растягиваем блок */
+    padding: 30px;
+    max-width: 100%;
     border-radius: 10px;
     border: 1px solid #e0e0e0;
     margin-bottom: 20px;
     color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.info:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-number {
@@ -89,7 +110,6 @@
 .info-text {
     margin-left: 15px;
     color: #555;
-    
 }
 
 /* Заголовки */
@@ -111,4 +131,24 @@
     justify-content: center;
     align-items: center;
     height: 50vh;
+}
+
+/* Адаптивность для десктопных экранов */
+@media (min-width: 1024px) {
+    /* Интро-блок */
+    .intro {
+        width: 100%;
+        max-width: 1200px;
+        padding: 80px 60px;
+    }
+
+    /* Кнопка */
+    .to-vacancies-button {
+        font-size: 18px;
+        padding: 14px 30px;
+    }
+
+    .intro-img {
+        margin-bottom: 50px; /* Уменьшаем отступ снизу */
+    }
 }
