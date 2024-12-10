@@ -8,6 +8,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   base: "/HH_frontend", 
   server: {
+    host: '0.0.0.0', // Зафиксируйте адрес
+    port: 5173,        // Укажите нужный порт
+    strictPort: true,   // Принудительно использовать указанный порт
     https: {
       key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
