@@ -1,23 +1,20 @@
 import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
-import fs from 'fs';
-import path from 'path';
+
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: "/HH_frontend", 
+  base: './', // Используйте относительные пути
+  build: {
+    outDir: '../dist',
+  },
   server: {
-    host: '0.0.0.0', // Зафиксируйте адрес
+    host: true, // Зафиксируйте адрес
     port: 5173,        // Укажите нужный порт
-    strictPort: true,   // Принудительно использовать указанный порт
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    },
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "http://192.168.202.6:8000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/"), // Убираем /api из пути
       },

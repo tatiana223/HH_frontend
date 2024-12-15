@@ -24,7 +24,7 @@ export const VacanciesList = async (vacancy_name: string): Promise<VacanciesResu
 };
 
 export const GetVacancyById = async (vacancy_id: number | string): Promise<Vacancy> => {
-  const response = await fetch(`http://localhost:8000/vacancies/${vacancy_id}/`);
+  const response = await fetch(`/api/vacancies/${vacancy_id}/`);
   const data = await response.json();
   console.log("OOOO0000O", data);
   return data

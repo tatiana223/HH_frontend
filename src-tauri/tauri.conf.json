@@ -2,10 +2,10 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "hh",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.tauri.HH",
   "build": {
-    "frontendDist": "../build",
-    "devUrl": "http://localhost:5173",
+    "frontendDist": "../dist",
+    "devUrl": "https://192.168.202.6:5173",
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev"
   },
@@ -17,10 +17,17 @@
         "height": 600,
         "resizable": true,
         "fullscreen": false
+        
       }
     ],
     "security": {
       "csp": null
+    },
+    "withGlobalTauri": true
+  },
+  "plugins": {
+    "http": {
+      "enabled": true 
     }
   },
   "bundle": {
