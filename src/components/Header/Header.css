@@ -61,6 +61,17 @@ html, body {
     width: 52px; /* Ширина кнопки */
     height: 52px; /* Высота кнопки */
 }
+.login-btn {
+    height: clamp(45px, 8vh, 8vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    border: none;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: clamp(16px, 2vh, 2vh);
+}
 
 .home-btn img {
     height: 100%; /* Картинка будет растягиваться по высоте */

@@ -6,6 +6,7 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { NavigationBar } from "./components/NavigationBar/NavigationBar";
 import { useEffect } from "react";
 import { BrowserRouter } from 'react-router-dom';
+import LoginPage from "./pages/LoginPage/LoginPage"
 
 if (window && (window as any).__TAURI__) {
 
@@ -37,6 +38,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path={ROUTES.HOME} index element={<HomePage />} />
+        <Route path={ROUTES.LOGIN} index element={<LoginPage />} />
         <Route path={ROUTES.VACANCIES} element={<VacanciesPage />} />
         <Route path={`${ROUTES.VACANCIES}/:vacancy_id`} element={<VacancyPage />} />
       </Routes>
