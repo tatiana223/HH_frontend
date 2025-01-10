@@ -21,7 +21,7 @@ export const VACANCIES_MOCK: VacanciesResult = {
       money_to: "50000",
       city: "Москва",
       name_company: "Контакт Плюс",
-      peculiarities: "Работа подходит для людей с ограниченными возможностями",
+      peculiarities: "Нарушение слуха",
       url: "",
     },
   ],

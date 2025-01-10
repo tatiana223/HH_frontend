@@ -14,7 +14,7 @@ export default defineConfig({
     port: 5173,        // Укажите нужный порт
     proxy: {
       "/api": {
-        target: "http://192.168.202.6:8000",
+        target: "http://192.168.0.106:8000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/"), // Убираем /api из пути
       },
