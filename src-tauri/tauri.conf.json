@@ -1,0 +1,44 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "hh",
+  "version": "0.1.0",
+  "identifier": "com.tauri.HH",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "https://192.168.0.106:5173",
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Сервис для трудоустройства",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+        
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "withGlobalTauri": true
+  },
+  "plugins": {
+    "http": {
+      "enabled": true 
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

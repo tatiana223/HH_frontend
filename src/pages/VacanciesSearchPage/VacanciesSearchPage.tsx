@@ -61,13 +61,22 @@ const VacancyPage: FC = () => {
                 />
               </Col>
               <Col md={2}>
-                <a className="btn btn-danger position-relative">
+                <a
+                  className="btn btn-blue"
+                  style={{
+                    opacity: 0.5, // Прозрачность
+                    pointerEvents: "none", // Делаем кнопку некликабельной
+                  }}
+                >
                   Отклики
-                  <span className="badge rounded-pill position-absolute top-0 start-100 translate-middle">
+                  <span className="badge badge-gray position-absolute top-0 start-100 translate-middle">
                     0
                   </span>
                 </a>
               </Col>
+
+
+
             </Row>
 
             {loading ? (
