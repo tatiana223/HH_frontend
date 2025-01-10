@@ -1,5 +1,5 @@
 import "./VacanciesSearchPage.css";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
 import { Vacancy, VacanciesList } from "../../modules/vacanciesApi";
 import { BreadCrumbs } from "../../components/BreadCrumbs/BreadCrumbs";
@@ -10,34 +10,38 @@ import { VACANCIES_MOCK } from "../../modules/mock";
 import Header from "../../components/Header/Header";
 import InputField from "../../components/InputField/InputField";
 import { useDispatch, useSelector } from "react-redux";
-import { setVacancies, setSearchValue, setLoading } from "../../slices/vacanciesSlice";
+import { setSearchValue } from "../../slices/vacanciesSlice";
+import { RootState } from '../../store';
 
 const VacancyPage: FC = () => {
   const dispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.vacancies.searchValue);
+
+  const [loading, setLoading] = useState(false);
+  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+
   const navigate = useNavigate();
 
-  const { vacancies, searchValue, loading } = useSelector((state: any) => state.vacancies);
-
   const handleSearch = () => {
-    dispatch(setLoading(true)); // Устанавливаем состояние загрузки
+    setLoading(true);
     VacanciesList(searchValue)
       .then((response) => {
-        const filteredVacancies = response.vacancies.filter((item: Vacancy) =>
+        const filteredVacancies = response.vacancies.filter((item) => 
           item.vacancy_name.toLocaleLowerCase().startsWith(searchValue.toLocaleLowerCase())
         );
-        dispatch(setVacancies(filteredVacancies));
+        setVacancies(filteredVacancies);
       })
       .catch(() => {
-        const filteredMockData = VACANCIES_MOCK.vacancies.filter((item: Vacancy) =>
+        const filteredMockData = VACANCIES_MOCK.vacancies.filter((item) =>
           item.vacancy_name.toLocaleLowerCase().startsWith(searchValue.toLocaleLowerCase())
         );
-        dispatch(setVacancies(filteredMockData));
+        setVacancies(filteredMockData);
       })
-      .finally(() => dispatch(setLoading(false))); // Останавливаем состояние загрузки
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    handleSearch(); // При монтировании
+    handleSearch();
   }, []);
 
   const handleCardClick = (vacancy_id: number) => {
@@ -74,9 +78,6 @@ const VacancyPage: FC = () => {
                   </span>
                 </a>
               </Col>
-
-
-
             </Row>
 
             {loading ? (
