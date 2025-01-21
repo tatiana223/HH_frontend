@@ -47,3 +47,24 @@
 .navbar-nav .nav-link:hover {
     color: gray;  /* Цвет при наведении */
 }
+
+/* Основной стиль для ссылки профиля */
+.nav-profile {
+    display: inline-block;
+    color: black;
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    margin-right: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-profile:hover {
+    color: gray; /* Цвет при наведении */
+}
+
+/* Дополнительный отступ между элементами навигации */
+.navbar-nav .nav-link:not(:last-child) {
+    margin-bottom: 8px;
+}
