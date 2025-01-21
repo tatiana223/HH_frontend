@@ -2,8 +2,8 @@ export interface Vacancy {
   vacancy_id: number;
   description: string;
   vacancy_name: string;
-  money_from: string;
-  money_to: string;
+  money_from: number;
+  money_to: number;
   city: string;
   name_company: string;
   peculiarities: string;

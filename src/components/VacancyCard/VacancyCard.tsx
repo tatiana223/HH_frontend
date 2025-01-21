@@ -4,14 +4,15 @@ import "./VacancyCard.css";
 import defaultImage from "../../static/images/DefaultImage.jpg";
 
 interface Props {
-    vacancy_name: string;
-    description: string;
-    money_from: string;
-    money_to: string;
-    city: string;
-    name_company: string;
-    peculiarities: string;
-    url: string;
+    vacancy_id: number | undefined;
+    vacancy_name: string | undefined;
+    description: string | undefined;
+    money_from: number | undefined;
+    money_to: number | undefined;
+    city: string | undefined;
+    name_company: string | undefined;
+    peculiarities: string | undefined;
+    url: string | null | undefined;
     imageClickHandler: () => void;
 }
 

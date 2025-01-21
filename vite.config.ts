@@ -5,21 +5,19 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: './', // Используйте относительные пути
-  build: {
-    outDir: '../dist',
-  },
+  base: './', 
   server: {
-    host: true, // Зафиксируйте адрес
-    port: 5173,        // Укажите нужный порт
+    host: 'localhost', 
+    port: 5173,        
     proxy: {
       "/api": {
-        target: "http://192.168.0.106:8000",
+        target: "http://localhost:8000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/"), // Убираем /api из пути
+        rewrite: (path) => path.replace(/^\/api/, ''), // Убираем /api из пути
       },
     },
   },
+  
 
   plugins: [
     react(),

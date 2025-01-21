@@ -1,46 +1,32 @@
 import "./VacanciesSearchPage.css";
 import { FC, useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
-import { Vacancy, VacanciesList } from "../../modules/vacanciesApi";
+
 import { BreadCrumbs } from "../../components/BreadCrumbs/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../../../Routes";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
-import { useNavigate } from "react-router-dom";
-import { VACANCIES_MOCK } from "../../modules/mock";
+
 import Header from "../../components/Header/Header";
 import InputField from "../../components/InputField/InputField";
-import { useDispatch, useSelector } from "react-redux";
-import { setVacancies, setSearchValue, setLoading } from "../../slices/vacanciesSlice";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState } from '../../store';
+import { getVacanciesList } from '../../slices/vacanciesSlice';
+import { Vacancies } from '../../api/Api';
+
 
 const VacancyPage: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { vacancies, searchValue, loading } = useSelector((state: any) => state.vacancies);
-
-  const handleSearch = () => {
-    dispatch(setLoading(true)); // Устанавливаем состояние загрузки
-    VacanciesList(searchValue)
-      .then((response) => {
-        const filteredVacancies = response.vacancies.filter((item: Vacancy) =>
-          item.vacancy_name.toLocaleLowerCase().startsWith(searchValue.toLocaleLowerCase())
-        );
-        dispatch(setVacancies(filteredVacancies));
-      })
-      .catch(() => {
-        const filteredMockData = VACANCIES_MOCK.vacancies.filter((item: Vacancy) =>
-          item.vacancy_name.toLocaleLowerCase().startsWith(searchValue.toLocaleLowerCase())
-        );
-        dispatch(setVacancies(filteredMockData));
-      })
-      .finally(() => dispatch(setLoading(false))); // Останавливаем состояние загрузки
-  };
+  const { searchValue, vacancies, loading } = useSelector((state: RootState) => state.vacancies); // получение данных из стора
 
   useEffect(() => {
-    handleSearch(); // При монтировании
-  }, []);
+    dispatch(getVacanciesList()); // отправляем `thunk`
+  }, [dispatch]);
 
-  const handleCardClick = (vacancy_id: number) => {
+  const handleCardClick = (vacancy_id: number | undefined) => {
     navigate(`${ROUTES.VACANCIES}/${vacancy_id}`);
   };
 
@@ -55,28 +41,10 @@ const VacancyPage: FC = () => {
               <Col md={10}>
                 <InputField
                   value={searchValue}
-                  setValue={(value) => dispatch(setSearchValue(value))}
                   loading={loading}
-                  onSubmit={handleSearch}
                 />
               </Col>
-              <Col md={2}>
-                <a
-                  className="btn btn-blue"
-                  style={{
-                    opacity: 0.5, // Прозрачность
-                    pointerEvents: "none", // Делаем кнопку некликабельной
-                  }}
-                >
-                  Отклики
-                  <span className="badge badge-gray position-absolute top-0 start-100 translate-middle">
-                    0
-                  </span>
-                </a>
-              </Col>
-
-
-
+              
             </Row>
 
             {loading ? (
@@ -86,9 +54,10 @@ const VacancyPage: FC = () => {
             ) : (
               <Row xs={4} md={4} className="g-4 cards-wrapper">
                 {vacancies.length ? (
-                  vacancies.map((item: Vacancy) => (
+                  vacancies.map((item: Vacancies) => (
                     <Col key={item.vacancy_id}>
                       <VacancyCard
+                        vacancy_id={item.vacancy_id}
                         url={item.url}
                         vacancy_name={item.vacancy_name}
                         description={item.description}
