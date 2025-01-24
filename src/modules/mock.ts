@@ -1,4 +1,19 @@
-import { VacanciesResult } from "./vacanciesApi";
+export interface Vacancy {
+  vacancy_id: number;
+  description: string;
+  vacancy_name: string;
+  money_from: number;
+  money_to: number;
+  city: string;
+  name_company: string;
+  peculiarities: string;
+  url: string;
+}
+
+
+export interface VacanciesResult {
+  vacancies: Vacancy[];
+}
 
 export const VACANCIES_MOCK: VacanciesResult = { 
   vacancies: [

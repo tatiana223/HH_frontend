@@ -18,10 +18,10 @@ export const loginUserAsync = createAsyncThunk(
   async (credentials: { username: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await api.login.loginCreate(credentials);
-      console.log('API logout response:', response);
+      console.log('API login response:', response);
       return response.data; 
     } catch (error) {
-      console.log('API logout error:', error);
+      console.log('API login error:', error);
       return rejectWithValue('Ошибка авторизации'); // Возвращаем ошибку в случае неудачи
     }
   }
