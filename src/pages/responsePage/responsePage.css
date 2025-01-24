@@ -1,0 +1,76 @@
+/* Контейнер для страницы отклика */
+.response-page-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #f9f9f9;
+  }
+  
+  /* Заголовок на странице отклика */
+  .response-page-container h1 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 44px;
+    color: black;
+    letter-spacing: -0.01em;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  /* Информация о кандидате */
+  .candidate-info h4 {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* Контейнер с выбранными вакансиями */
+  .selected-vacancies-container {
+    margin-top: 30px;
+  }
+  
+  /* Контейнер карточек вакансий для страницы отклика */
+  .cards-wrapper-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  /* Сообщение, если вакансии не найдены */
+  .cities-not-found h1 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 44px;
+    color: black;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+  
+  /* Адаптивность для мобильных экранов */
+  @media screen and (max-width: 768px) {
+    .cards-wrapper-2 {
+      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* Карточки занимают 100% ширины на мобильных экранах */
+      gap: 10px;
+    }
+  
+    .response-page-container h1 {
+      font-size: 36px; /* Уменьшаем размер заголовка на мобильных */
+    }
+  
+    .candidate-info h4 {
+      font-size: 1rem; /* Уменьшаем размер информации о кандидате */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .response-page-container h1 {
+      font-size: 28px; /* Еще меньше шрифт для заголовков */
+    }
+  
+    .candidate-info h4 {
+      font-size: 0.9rem; /* Уменьшаем шрифт для описания кандидата */
+    }
+  }
+  

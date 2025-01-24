@@ -157,8 +157,37 @@ export interface Vacancies {
 }
 
 export interface ResponsesVacancies {
-  /** Vacancy */
-  vacancy: number;
+  /** Vacancy id */
+  vacancy_id?: string;
+  /**
+   * Vacancy name
+   * @minLength 1
+   */
+  vacancy_name: string;
+  /** Money from */
+  money_from: number;
+  /** Money to */
+  money_to: number;
+  /**
+   * Url
+   * @minLength 1
+   */
+  url: string;
+  /**
+   * City
+   * @minLength 1
+   */
+  city: string;
+  /**
+   * Name company
+   * @minLength 1
+   */
+  name_company: string;
+  /**
+   * Peculiarities
+   * @minLength 1
+   */
+  peculiarities: string;
   /** Request */
   request: number;
   /** Quantity */
@@ -513,7 +542,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             vacancy_id?: {
               vacancy_id?: number;
               vacancy_name: string;
-              description: string;
               money_from: number;
               money_to: number;
               city: string;

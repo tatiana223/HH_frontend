@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from '../../store';
 import { logoutUserAsync } from '../../slices/userSlice'; 
-import { setSearchValue, getVacanciesList } from '../../slices/vacanciesSlice'; 
+import {  getVacanciesList } from '../../slices/vacanciesSlice'; 
 //import { setResponseId, setCount } from '../../slices/responseDraftSlice';
 
 const Header: React.FC = () => {

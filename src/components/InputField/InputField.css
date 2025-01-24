@@ -56,7 +56,7 @@
     cursor: not-allowed;
 }
 
-/* Базовый стиль кнопки */
+
 /* Базовый стиль кнопки */
 .responses-button {
     display: flex;
@@ -73,43 +73,43 @@
     text-decoration: none;
     transition: background-color 0.3s ease, opacity 0.3s ease;
 }
-
-/* Активное состояние кнопки */
-.responses-button.active {
-    background-color: #a74a7d; /* Ярко-синий */
-    opacity: 1 !important; /* Полностью непрозрачная */
-    pointer-events: auto; /* Убедиться, что клики разрешены */
-    cursor: pointer; /* Изменяем курсор на "руку" */
-}
-
-/* Неактивное состояние кнопки */
-.responses-button.inactive {
-    background-color: #007bff; /* Оставляем синий цвет */
-    opacity: 0.5; /* Полупрозрачная */
-    pointer-events: none; /* Отключаем клики */
-}
-
-/* Наведение на активную кнопку */
-.responses-button.active:hover {
-    background-color: #0056b3; /* Тёмно-синий */
-}
-
 .responses-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3; /* Более темный синий */
+  cursor: default; /* Убираем курсор "руку" */
 }
-
-.responses-button .badge {
-    background-color: #6c757d;
+/* Стиль для кнопки "Откликнуться" */
+.btn-favorites {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    position: relative;
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+  
+  .btn-favorites button {
+    background-color: #2368f0;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    border-radius: 12px;
-    padding: 3px 8px;
-    font-size: 12px;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-}
-
-.btn-blue {
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-favorites button:hover {
+    background-color: #1d4ca5; /* Более темный синий */
+    cursor: default; /* Убираем указатель */
+  }
+  
+  /* Синий стиль для кнопки */
+  .btn-blue {
     background-color: #007bff; /* Синий фон */
     color: white; /* Белый текст */
     border-radius: 10px;
@@ -149,7 +149,7 @@
     right: -5px;
   }
   
-  
+
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {

@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     vacancies: vacanciesReducer, // добавляем редьюсер для васансий
     user: userReducer, 
-    responseDraft: responseDraftReducer,  
+    responseDraft: responseDraftReducer,
   },
   
 });

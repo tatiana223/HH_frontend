@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { Button } from "react-bootstrap";
 import searchImg from "../../static/images/search-image.png";
-import { useDispatch, useSelector } from 'react-redux'; 
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { getVacanciesList, setSearchValue } from '../../slices/vacanciesSlice';
 import './InputField.css';
 import { RootState } from '../../store';
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from '../../../Routes';
 
 interface Props {
     value: string;
@@ -15,9 +17,16 @@ interface Props {
 const InputField: FC<Props> = ({ value, loading }) => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-    const response_id = useSelector((state: RootState) => state.responseDraft.response_id);
+    const isAuthenticated: boolean = useSelector((state: RootState) => state.user.isAuthenticated);
+    const id_response = useSelector((state: RootState) => state.responseDraft.id_response);
     const count = useSelector((state: RootState) => state.responseDraft.count);
+
+    const navigate = useNavigate();
+
+    // Событие нажатия на иконку "корзины"
+    const handleClick = (id_response: number | null) => {
+        navigate(`${ROUTES.RESPONSE}/${id_response}`);
+    };
 
     return (  
         <div className="search-bar">
@@ -37,15 +46,18 @@ const InputField: FC<Props> = ({ value, loading }) => {
                 onClick={() => dispatch(getVacanciesList())}>
                 Найти
             </Button>
-            <div
-                className={`responses-button ${isAuthenticated && response_id ? 'active' : 'inactive'}`}
-            >
-                Отклики
-                {(!isAuthenticated || !response_id) ? null : (
-                     <span className="badge rounded-pill position-absolute">{count}</span>
-                )}
-            </div>
-
+            
+            {isAuthenticated && (
+                <div
+                    className={`responses-button ${id_response ? 'active' : 'inactive'}`}
+                    onClick={() => handleClick(id_response ?? null)} // Добавляем обработчик события
+                >
+                    Отклики
+                    <span className="badge badge-gray position-absolute top-0 start-100 translate-middle">
+                        {count || 0}
+                    </span>
+                </div>
+            )}
         </div>
     );
 };
