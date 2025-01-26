@@ -7,6 +7,7 @@ import { addVacancyToResponse, } from '../../slices/responseDraftSlice';
 import { getVacanciesList } from '../../slices/vacanciesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
+import { deleteVacancyFromResponse, setVacancies } from '../../slices/responseDraftSlice';
 
 interface Props {
     vacancy_id: number | undefined;
@@ -50,6 +51,13 @@ export const VacancyCard: FC<Props> = ({
         if (vacancy_id) {
             await dispatch(addVacancyToResponse(vacancy_id));
             await dispatch(getVacanciesList()); // Для обновления отображения состояния иконки "корзины" 
+        }
+    }
+
+    const handleDeleteVacancy = async () => {
+        if (vacancy_id && id_response) {
+            await dispatch(deleteVacancyFromResponse({ idResponse: id_response, idVacancy: vacancy_id }));
+            dispatch(setVacancies(vacancies.filter(vacancy => vacancy.vacancy_id !== vacancy_id)));
         }
     }
 
@@ -143,7 +151,11 @@ export const VacancyCard: FC<Props> = ({
                                     </a>
                                 </Col>
                                 <Col md={3} xs={3}>
-
+                                {(isDraft) && (
+                                    <Button className="fav-btn-open" onClick={() => handleDeleteVacancy()}>
+                                        Удалить
+                                    </Button>
+                                )}
                                 </Col>
                             </Row>
                         </div>

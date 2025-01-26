@@ -76,6 +76,30 @@ export const deleteResponse = createAsyncThunk(
   }
 );
 
+export const updateResponse = createAsyncThunk(
+  'responses/updateResponse',
+  async ({ idResponse, responseData }: { idResponse: string; responseData: ResponseData }) => {
+    const responseDataToSend = {
+      name_human: responseData.name_human ?? '', 
+      education: responseData.education ?? '',
+      experience: responseData.experience ?? '',
+      peculiarities_comm: responseData.peculiarities_comm ?? ''
+    };
+    const response = await api.responses.responsesUpdateResponseUpdate(idResponse, responseDataToSend);
+    return response.data;
+  }
+);
+
+export const deleteVacancyFromResponse = createAsyncThunk(
+  'cities/deleteCityFromVacancyApplication',
+  async ({ idResponse, idVacancy }: { idResponse: number; idVacancy: number }) => {
+    await api.vacanciesResponses.vacanciesResponsesDeleteVacancyFromResponseDelete(
+      idResponse.toString(),
+      idVacancy.toString()
+    ); 
+  }
+);
+
 const responseDraftSlice = createSlice({
   name: 'responseDraft',
   initialState,
@@ -90,7 +114,6 @@ const responseDraftSlice = createSlice({
         state.vacancies = action.payload;
       },
       setResponseData: (state, action) => {
-        
         state.responseData = {
             ...state.responseData,
             ...action.payload,
@@ -129,6 +152,12 @@ const responseDraftSlice = createSlice({
           peculiarities_comm: ''
         };
       })
+      .addCase(updateResponse.fulfilled, (state, action) => {
+        state.responseData = action.payload;
+      })
+      .addCase(updateResponse.rejected, (state) => {
+        state.error = 'Ошибка при обновлении данных';
+      })
       .addCase(deleteResponse.rejected, (state) => {
         state.error = 'Ошибка при удалении вакансии';
       })
@@ -140,5 +169,5 @@ const responseDraftSlice = createSlice({
 });
 
 
-export const {setError, setResponseId, setCount} = responseDraftSlice.actions;
+export const {setVacancies, setResponseData, setError, setResponseId, setCount} = responseDraftSlice.actions;
 export default responseDraftSlice.reducer;

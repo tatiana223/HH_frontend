@@ -28,7 +28,7 @@ export const getVacanciesList = createAsyncThunk(
 
       dispatch(setResponseId(response_id));
       dispatch(setCount(count));
-      
+      console.log(response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue('Ошибка при загрузке данных');

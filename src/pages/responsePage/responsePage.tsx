@@ -1,6 +1,6 @@
 import "./responsePage.css";
 import { FC } from 'react';
-import { Col, Button, Row, Image, Alert } from "react-bootstrap";
+import { Col, Button, Form, Row, Image, Alert } from "react-bootstrap";
 import { ROUTES } from '../../../Routes';
 import { VacancyCard } from '../../components/VacancyCard/VacancyCard';
 import Header from "../../components/Header/Header";
@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { deleteResponse, getResponse, } from '../../slices/responseDraftSlice';
-import { setError } from '../../slices/responseDraftSlice';
+import { deleteResponse, getResponse, updateResponse} from '../../slices/responseDraftSlice';
+import { setError, setResponseData} from '../../slices/responseDraftSlice';
 
 const ResponsePage: FC = () => {
   const { id_response } = useParams();
@@ -31,7 +31,6 @@ const ResponsePage: FC = () => {
       dispatch(getResponse(id_response));
     }
   }, [id_response, dispatch]);
-
   const handleCardClick = (vacancy_id: number | undefined) => {
     navigate(`${ROUTES.VACANCIES}/${vacancy_id}`);
   };
@@ -52,6 +51,32 @@ const ResponsePage: FC = () => {
       }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    dispatch(
+        setResponseData({
+            ...responseData,
+            [name]: value,
+        })
+    );
+  };
+
+  const handleSaveVacancy = () => {
+    if (id_response) {
+      const responseDataToSend = {
+        name_human: responseData.name_human ?? '',
+        education: responseData.education ?? '',
+        experience: responseData.experience ?? '',
+        peculiarities_comm: responseData.peculiarities_comm ?? '',
+      };
+      try {
+        dispatch(updateResponse({ idResponse: id_response, responseData: responseDataToSend }));
+      } catch (error) {
+        dispatch(setError(error));
+      }
+    }
+  }
+
 
   return (
     
@@ -63,12 +88,71 @@ const ResponsePage: FC = () => {
                 <h1>Вакансия</h1>
             </div>
             </div>
-            <div className="candidate-info">
-            <h4>Фамилия кандидата: {responseData.name_human}</h4>
-            <h4>Образование: {responseData.education}</h4>
-            <h4>Опыт работы: {responseData.experience}</h4>
-            <h4>Комментарий: {responseData.peculiarities_comm}</h4>
-            </div>
+            {(!isDraft) ? (
+              <div>
+                <h4>ФИО кандидата: {responseData.name_human}</h4>
+                <h4>Образование: {responseData.education}</h4>
+                <h4>Опыт работы: {responseData.experience}</h4>
+                <h4>Комментарии: {responseData.peculiarities_comm}</h4>
+              </div>
+            ) : (
+              <div>
+                <Form.Group controlId="name_human">
+                  <h4>ФИО кандидата</h4>
+                  <Form.Control
+                    type="text"
+                    name="name_human"
+                    value={responseData.name_human ?? ''}
+                    onChange={handleInputChange}
+                    required
+                    disabled={!isDraft}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="education">
+                  <h4>Образование</h4>
+                  <Form.Control
+                    as="textarea"
+                    name="education"
+                    value={responseData.education ?? ''}
+                    onChange={handleInputChange}
+                    rows={4}
+                    required
+                    disabled={!isDraft}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="experience">
+                  <h4>Комментарии</h4>
+                  <Form.Control
+                    as="textarea"
+                    name="experience"
+                    value={responseData.experience ?? ''} 
+                    onChange={handleInputChange}
+                    rows={4}
+                    required
+                    disabled={!isDraft}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="peculiarities_comm">
+                  <h4>Опыт работы</h4>
+                  <Form.Control
+                    as="textarea"
+                    name="peculiarities_comm"
+                    value={responseData.peculiarities_comm ?? ''} 
+                    onChange={handleInputChange}
+                    rows={4}
+                    required
+                    disabled={!isDraft}
+                  />
+                </Form.Group>
+
+                <Button type="submit" className="save-button" onClick={handleSaveVacancy}>
+                  Сохранить
+                </Button>
+              </div>
+            )}
             <h1>Выбранные вакансии</h1>
             <div className="cards-wrapper-2 d-flex flex-column">
             {vacancies.length ? (
@@ -86,7 +170,7 @@ const ResponsePage: FC = () => {
                   imageClickHandler={() => handleCardClick(item.vacancy_id)}
                   request={item.request}
                   quantity={item.quantity}
-
+                  isDraft={isDraft}
                 />
               </Col>
                 

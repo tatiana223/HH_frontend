@@ -585,6 +585,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags responses
+     * @name ResponsesUpdateResponseUpdate
+     * @request PUT:/responses/{id_response}/update_response/
+     * @secure
+     */
+    responsesUpdateResponseUpdate: (
+      idResponse: string,
+      data: {
+        /** @example "Якимова Татьяна Сергеевна" */
+        name_human?: string;
+        /** @example "МГТУ им.Баумана, бакалавриат" */
+        education?: string;
+        /** @example "3 года опыта работы с Java" */
+        experience?: string;
+        /** @example "Нарушение слуха" */
+        peculiarities_comm?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        Responses,
+        | {
+            /** @example "Нет данных для обновления или поля не разрешены." */
+            Ошибка?: string;
+          }
+        | {
+            /** @example "Заявка на создание вакансии не найдена." */
+            Ошибка?: string;
+          }
+      >({
+        path: `/responses/${idResponse}/update_response/`,
+        method: "PUT",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags responses
      * @name ResponsesUpdateStatusAdminUpdate
      * @request PUT:/responses/{id_response}/update_status_admin/
      * @secure
@@ -651,48 +693,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/responses/${idResponse}/update_status_user/`,
         method: "PUT",
         secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags responses
-     * @name ResponsesUpdateVacancyUpdate
-     * @request PUT:/responses/{id_response}/update_vacancy/
-     * @secure
-     */
-    responsesUpdateVacancyUpdate: (
-      idResponse: string,
-      data: {
-        /** @example "Якимова Татьяна Сергеевна" */
-        name_human?: string;
-        /** @example "МГТУ им.Баумана, бакалавриат" */
-        education?: string;
-        /** @example "3 года опыта работы с Java" */
-        experience?: string;
-        /** @example "Нарушение слуха" */
-        peculiarities_comm?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<
-        Responses,
-        | {
-            /** @example "Нет данных для обновления или поля не разрешены." */
-            Ошибка?: string;
-          }
-        | {
-            /** @example "Заявка на создание вакансии не найдена." */
-            Ошибка?: string;
-          }
-      >({
-        path: `/responses/${idResponse}/update_vacancy/`,
-        method: "PUT",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -1010,12 +1010,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags vacancies_responses
      * @name VacanciesResponsesDeleteVacancyFromResponseDelete
-     * @request DELETE:/vacancies_responses/{mm_id}/delete_vacancy_from_response/
+     * @request DELETE:/vacancies_responses/{id_response}/{vacancy_id}/delete_vacancy_from_response/
      * @secure
      */
-    vacanciesResponsesDeleteVacancyFromResponseDelete: (mmId: string, params: RequestParams = {}) =>
+    vacanciesResponsesDeleteVacancyFromResponseDelete: (
+      idResponse: string,
+      vacancyId: string,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
-        path: `/vacancies_responses/${mmId}/delete_vacancy_from_response/`,
+        path: `/vacancies_responses/${idResponse}/${vacancyId}/delete_vacancy_from_response/`,
         method: "DELETE",
         secure: true,
         ...params,
