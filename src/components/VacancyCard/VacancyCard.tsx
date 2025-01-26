@@ -18,7 +18,9 @@ interface Props {
     peculiarities: string | undefined;
     url: string | null | undefined;
     imageClickHandler: () => void;
-    count?: number;
+    request: number;
+    quantity?: number;
+    isDraft?: boolean;
 }
 
 export const VacancyCard: FC<Props> = ({
@@ -31,15 +33,18 @@ export const VacancyCard: FC<Props> = ({
     peculiarities,
     url,
     imageClickHandler,
-    count,
+    request,
+    quantity,
+    isDraft
 }) => {
     console.log('Image URL:', url); // Логируем URL изображения
 
     const { pathname } = useLocation();
+    const id_response = useSelector((state: RootState) => state.responseDraft.id_response);
     const dispatch = useDispatch<AppDispatch>();
     const vacancies = useSelector((state: RootState) => state.responseDraft.vacancies);
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-
+    
     // Обработчик события нажатия на кнопку "Добавить"
     const handleAdd = async () => {
         if (vacancy_id) {
@@ -47,6 +52,8 @@ export const VacancyCard: FC<Props> = ({
             await dispatch(getVacanciesList()); // Для обновления отображения состояния иконки "корзины" 
         }
     }
+
+
     
     if (pathname === "/vacancies") {
         return (
@@ -107,7 +114,13 @@ export const VacancyCard: FC<Props> = ({
                     </Col>
                     <Col xs={10} sm={10} md={10}>
                         <div className="fav-card-body">
-                            <h5>{vacancy_name}</h5>
+                        {vacancy_name ? (
+                            <h5 className="vacancy-name">{vacancy_name}</h5>
+                        ) : (
+                            <p className="vacancy-name not-available">Название вакансии не указано</p>
+                        )}
+
+
                             <div className="form-group">
                                 <Row>
                                     <Col xs={3} sm={3} md={3}>
@@ -117,7 +130,7 @@ export const VacancyCard: FC<Props> = ({
                                         <input
                                             type="number"
                                             className="localcount"
-                                            value={count}
+                                            value={quantity}
                                             disabled
                                         />
                                     </Col>
@@ -130,6 +143,7 @@ export const VacancyCard: FC<Props> = ({
                                     </a>
                                 </Col>
                                 <Col md={3} xs={3}>
+
                                 </Col>
                             </Row>
                         </div>

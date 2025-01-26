@@ -141,3 +141,13 @@
     justify-content: center;
     margin-top: 25px;
 }
+/* VacancyCard.css */
+.vacancy-name {
+  font-size: 1.25rem; /* Увеличиваем размер шрифта */
+  font-weight: bold; /* Делаем текст жирным */
+  color: #2c3e50; /* Тёмно-синий цвет */
+  margin: 10px 0; /* Добавляем отступы сверху и снизу */
+  text-align: center; /* Центрируем текст */
+  text-transform: uppercase; /* Преобразуем текст в верхний регистр */
+  letter-spacing: 1px; /* Добавляем межбуквенный интервал */
+}

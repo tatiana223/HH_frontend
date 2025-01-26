@@ -2,17 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../api';
 
 interface Vacancy {
-  vacancy_id?: { 
-    vacancy_id?: number | undefined;
-    vacancy_name: string | undefined;
-    money_from: number | undefined;
-    money_to: number | undefined;
-    city: string | undefined;
-    name_company: string | undefined;
-    peculiarities: string | undefined;
-    url?: string | null | undefined;
-  } | undefined;
-  count?: number | undefined;  
+  vacancy_id?: number;
+  vacancy_name: string;
+  money_from: number;
+  money_to: number;
+  url?: string;
+  city: string;
+  name_company: string;
+  peculiarities: string;
+  request: number;
+  quantity: number;
+  
 }
 
 interface ResponseData {
@@ -25,8 +25,7 @@ interface ResponseData {
 
 interface ResponseState {
   id_response?: number;
-  vacancy_name: string;
-  count: number | undefined;
+  quantity: number | undefined;
 
   vacancies: Vacancy[]; // массив услуг
   responseData: ResponseData; // поля заявки
@@ -36,8 +35,7 @@ interface ResponseState {
 
 const initialState: ResponseState = {
   id_response: NaN,
-  vacancy_name: '',
-  count: NaN,
+  quantity: NaN,
 
   vacancies: [],
   responseData: {
@@ -56,6 +54,7 @@ export const getResponse = createAsyncThunk(
   
   async (idResponse: string) => {
     const response = await api.responses.responsesRead(idResponse);
+    console.log (response.data);
     return response.data;
     
   }
@@ -69,6 +68,14 @@ export const addVacancyToResponse = createAsyncThunk(
   }
 );
 
+export const deleteResponse = createAsyncThunk(
+  'responses/deleteResponse',
+  async (idResponse: string) => {
+    const response = await api.responses.responsesDeleteResponseDelete(idResponse);
+    return response.data;
+  }
+);
+
 const responseDraftSlice = createSlice({
   name: 'responseDraft',
   initialState,
@@ -77,7 +84,7 @@ const responseDraftSlice = createSlice({
         state.id_response = action.payload;
       },
       setCount: (state, action) => {
-        state.count = action.payload;
+        state.quantity = action.payload;
       },
       setVacancies: (state, action) => {
         state.vacancies = action.payload;
@@ -89,6 +96,9 @@ const responseDraftSlice = createSlice({
             ...action.payload,
         };
       },
+      setError: (state, action) => {
+        state.error = action.payload;
+      }
   },
 
   extraReducers: (builder) => {
@@ -97,15 +107,30 @@ const responseDraftSlice = createSlice({
         const { responses, vacancies } = action.payload;
         if (responses && vacancies) {
             state.id_response = responses.id_response;
+            state.vacancies = vacancies;
             state.responseData = {
                 name_human: responses.name_human,
                 education: responses.education,
                 experience: responses.experience,
                 peculiarities_comm: responses.peculiarities_comm,
             };
-            state.vacancies = vacancies || [];
-            console.log(action.payload)
+            state.isDraft = responses.status === 1;
+            
         }
+      })
+      .addCase(deleteResponse.fulfilled, (state) => {
+        state.id_response = NaN;
+        state.quantity = NaN;
+        state.vacancies = [];
+        state.responseData = {
+          name_human: '',
+          education: '',
+          experience: '',
+          peculiarities_comm: ''
+        };
+      })
+      .addCase(deleteResponse.rejected, (state) => {
+        state.error = 'Ошибка при удалении вакансии';
       })
       .addCase(getResponse.rejected, (state) => {
         state.error = 'Ошибка при загрузке данных';
@@ -115,5 +140,5 @@ const responseDraftSlice = createSlice({
 });
 
 
-export const {setResponseId, setCount} = responseDraftSlice.actions;
+export const {setError, setResponseId, setCount} = responseDraftSlice.actions;
 export default responseDraftSlice.reducer;
