@@ -60,7 +60,6 @@ const VacancyPage: FC = () => {
                         vacancy_id={item.vacancy_id}
                         url={item.url}
                         vacancy_name={item.vacancy_name}
-                        description={item.description}
                         money_from={item.money_from}
                         money_to={item.money_to}
                         city={item.city}

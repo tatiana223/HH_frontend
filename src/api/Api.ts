@@ -85,6 +85,11 @@ export interface Responses {
    */
   deleted_at?: string | null;
   /**
+   * Submitted at
+   * @format date-time
+   */
+  submitted_at?: string | null;
+  /**
    * Completed at
    * @format date-time
    */
@@ -395,6 +400,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "PUT",
         body: data,
         secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -457,6 +463,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           creator: string;
           /** Имя модератора, обработавшего заявку (если есть). */
           moderator?: string | null;
+          /** Дата интервью. */
+          interview_date?: string | null;
           /**
            * Дата и время завершения заявки (если была завершена).
            * @format date-time
@@ -475,8 +483,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           experience?: string | null;
           /** Особенности кандидата. */
           peculiarities_comm?: string | null;
-          /** Дата интервью. */
-          interview_date?: string | null;
         }[],
         any
       >({
@@ -716,20 +722,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Функция регистрации новых пользователей Если пользователя c указанным в request email ещё нет, в БД будет добавлен новый пользователь.
+     * @description Регистрация нового пользователя (только username и password)
      *
      * @tags user
      * @name UserCreate
      * @request POST:/user/
      * @secure
      */
-    userCreate: (data: User, params: RequestParams = {}) =>
-      this.request<User, any>({
+    userCreate: (
+      data: {
+        /** Имя пользователя */
+        username: string;
+        /**
+         * Пароль пользователя
+         * @minLength 8
+         */
+        password: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
         path: `/user/`,
         method: "POST",
         body: data,
         secure: true,
-        format: "json",
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -765,6 +782,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         secure: true,
         ...params,
       }),
+    userUpdateUserUpdate: (userId: string, data: User, params: RequestParams = {}) =>
+      this.request<User, any>({
+        path: `/user/${userId}/update_user/`,
+        method: "PUT",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
   };
   vacancies = {
     /**
@@ -796,7 +823,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             url?: string;
           }[];
           draft_responses?: number | null;
-          count?: number | null;
+          quantity?: number | null;
         },
         any
       >({
@@ -882,10 +909,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             /** Имя модератора заявки (если есть). */
             moderator?: string | null;
             /**
-             * Дата завершения заявки.
+             * Дата сформирования заявки.
              * @format date-time
              */
-            completed_at?: string | null;
+            submitted_at?: string | null;
+            /**
+             * Дата интервью.
+             * @format date-time
+             */
+            interview_date?: string | null;
             /**
              * Дата удаления заявки.
              * @format date-time
@@ -899,11 +931,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             experience?: string | null;
             /** Особенности кондидата. */
             peculiarities_comm?: string | null;
-            /**
-             * Дата интервью.
-             * @format date-time
-             */
-            interview_date?: string | null;
           };
           /** Список вакансий, привязанных к заявке. */
           vacancies?: {
@@ -1030,17 +1057,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags vacancies_responses
      * @name VacanciesResponsesUpdateResponseUpdate
-     * @request PUT:/vacancies_responses/{mm_id}/update_response/
+     * @request PUT:/vacancies_responses/{id_response}/{vacancy_id}/update_response/
      * @secure
      */
     vacanciesResponsesUpdateResponseUpdate: (
-      mmId: string,
+      idResponse: string,
+      vacancyId: string,
       data: {
         /**
          * Количество откликов для данной вакансии в заявке.
          * @example 1
          */
-        count: number;
+        quantity: number;
       },
       params: RequestParams = {},
     ) =>
@@ -1059,7 +1087,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             Ошибка?: string;
           }
       >({
-        path: `/vacancies_responses/${mmId}/update_response/`,
+        path: `/vacancies_responses/${idResponse}/${vacancyId}/update_response/`,
         method: "PUT",
         body: data,
         secure: true,

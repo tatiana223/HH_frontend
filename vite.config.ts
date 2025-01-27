@@ -1,8 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import mkcert from 'vite-plugin-mkcert';
-import fs from 'fs';
-import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
@@ -10,10 +8,10 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    https: {
+    /*https: {
       key: fs.readFileSync(path.resolve(__dirname, 'cert.key')), // Путь к ключу
       cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')), // Путь к сертификату
-    },
+    },*/
     proxy: {
       "/api": {
         target: "http://localhost:8000",

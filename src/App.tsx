@@ -4,36 +4,15 @@ import VacanciesPage from "./pages/VacanciesSearchPage/VacanciesSearchPage";
 import { ROUTES } from "../Routes";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { NavigationBar } from "./components/NavigationBar/NavigationBar";
-import { useEffect } from "react";
 import { BrowserRouter } from 'react-router-dom';
 import LoginPage from "./pages/LoginPage/LoginPage"
 import ResponsePage from "./pages/responsePage/responsePage"
+import ResponseHistoryPage from "./pages/ResponseHistoryPage/ResponseHistoryPage"
+import RegisterPage from "./pages/RegisterPage/RegisterPage"
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 
-if (window && (window as any).__TAURI__) {
-
-} else {
-  console.error("Tauri API не доступен");
-}
 
 function App() {
-  useEffect(() => {
-    if ((window as any).__TAURI__) {
-      const { invoke } = (window as any).__TAURI__.tauri;
-      
-      invoke('tauri', { cmd: 'create' })
-        .then((response: any) => console.log(response))
-        .catch((error: any) => console.log(error));
-
-      return () => {
-        invoke('tauri', { cmd: 'close' })
-          .then((response: any) => console.log(response))
-          .catch((error: any) => console.log(error));
-      };
-    } else {
-      console.error("Tauri API не доступен");
-    }
-  }, []);
-  
 
   return (
     <BrowserRouter>
@@ -42,8 +21,11 @@ function App() {
         <Route path={ROUTES.HOME} index element={<HomePage />} />
         <Route path={ROUTES.VACANCIES} element={<VacanciesPage />} />
         <Route path={`${ROUTES.VACANCIES}/:vacancy_id`} element={<VacancyPage />} />
+        <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={`${ROUTES.RESPONSE}/:id_response`} element={<ResponsePage />} />
+        <Route path={`${ROUTES.RESPONSE}`} element={<ResponseHistoryPage />} />
+        <Route path={`${ROUTES.PROFILE}`} element={< UserProfilePage/>} />
       </Routes>
     </BrowserRouter>
   );

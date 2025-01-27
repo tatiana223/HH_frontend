@@ -1,0 +1,84 @@
+.container-2 {
+    padding: 40px;
+    width: 100%; /* Контейнер будет растягиваться на всю ширину */
+    height: 100vh; /* Устанавливаем высоту на весь экран */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрируем содержимое по вертикали */
+    margin-top: -130px; /* Убираем перекрытие с хедером */
+}
+
+.cities-title h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.container-3 {
+    display: flex;
+    justify-content: center;
+}
+
+.login-container .enter-button {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.enter-button {
+    width: 100% !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px !important;
+    box-sizing: border-box;
+}
+
+.enter-button:hover {
+    background-color: #0056b3;
+}
+
+/* Стиль для успешного сообщения */
+.alert-success {
+    margin-bottom: 15px;
+}
+
+/* Стиль для ошибки */
+.alert-danger {
+    margin-bottom: 15px;
+}
+
+.breadcrumbs {
+    display: flex;
+    justify-content: flex-start; /* Выровнять по левому краю */
+    margin-bottom: 20px;
+}
+
+.breadcrumbs .breadcrumb-item {
+    font-size: 14px;
+}
+
+.breadcrumbs .breadcrumb-item + .breadcrumb-item::before {
+    content: "›"; /* Вы можете настроить разделитель между элементами, если нужно */
+    margin: 0 5px;
+}

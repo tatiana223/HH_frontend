@@ -151,3 +151,270 @@
   text-transform: uppercase; /* Преобразуем текст в верхний регистр */
   letter-spacing: 1px; /* Добавляем межбуквенный интервал */
 }
+
+.vacancy-info {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.vacancy-btn, .add-btn {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.vacancy-btn:hover, .add-btn:hover {
+  background-color: #0056b3;
+}
+
+.fav-card{
+  width: 100%;
+  height: 189px;
+  background-color: #ECF4FF;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 0;
+  margin-top: 2vh;
+}
+
+.fav-card img{
+  width: 169px;
+  height: 149px;
+  object-fit: cover;
+  margin-top: 20px;
+  margin-left: 35px;
+  border-radius: 10%;
+}
+
+.fav-card-body {
+  margin-top: 26px;
+  margin-bottom: 25px;
+  margin-left: 2vw;
+}
+
+.fav-card-body h5 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.form-label {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  margin-top: 27px;
+  color: #555555;
+  height: 29px;
+}
+
+.localcount {
+  margin-top: 17px!important;
+  font-family: 'Arial', sans-serif!important;
+  font-weight: bold!important;
+  font-size: 21px!important;
+  color: #3166B6!important;
+  background-color: white!important;
+  border: none!important;
+  width: 10vw!important;
+  border-radius: 10%;
+}
+
+.fav-btn-open{
+  width: 143px;
+  height: 24px;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  background-color: #1890FF;
+  color: white;
+  border-radius: 2px;
+  text-decoration: none;
+  display: flex; /*  Делаем  кнопку  flex-контейнером  */
+  align-items: center; /*  Выравниваем  по  вертикали  */
+  justify-content: center;
+  margin-top: 25px;
+}
+/* VacancyCard.css */
+.vacancy-name {
+text-align: left;  /* Выровнять текст по левому краю */
+font-size: 18px;
+font-weight: bold;
+color: #333;
+margin-bottom: 10px;
+}
+
+
+
+/* Общий стиль для карточек */
+.card, .fav-card {
+display: flex;
+flex-direction: column;
+position: relative;
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+background-color: #fff;
+transition: transform 0.3s ease-in-out;
+overflow: hidden;
+}
+
+/* Анимация при наведении */
+.card:hover, .fav-card:hover {
+transform: scale(1.05);
+}
+
+/* Карточки вакансий */
+.vacancy-card {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: space-between;
+max-width: 1200px;
+margin: 0 auto;
+padding: 10px;
+}
+
+.card {
+flex: 1 1 45%; /* Ширина карточки 45% */
+max-width: 500px;
+min-width: 300px;
+min-height: 400px;
+box-sizing: border-box;
+}
+
+/* Изображение вакансий */
+.vacancy-card-img img {
+width: 100%;
+height: 200px;
+object-fit: cover;
+border-radius: 15px 15px 0 0;
+}
+
+/* Тело карточки вакансии */
+.vacancy-card-body {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: 15px;
+flex-grow: 1;
+}
+
+/* Название вакансии */
+
+
+/* Информация о вакансии */
+.vacancy-info {
+font-size: 1rem;
+color: #555;
+margin-bottom: 15px;
+line-height: 1.5;
+}
+
+/* Кнопки вакансий */
+.vacancy-btn, .add-btn {
+width: 100%;
+text-align: center;
+margin-top: 10px;
+background-color: #007bff;
+color: white;
+border-radius: 8px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.vacancy-btn:hover, .add-btn:hover {
+background-color: #0056b3;
+}
+
+/* Карточки откликов */
+.fav-card {
+width: 100%;
+height: 200px;
+background-color: #ECF4FF;
+border-radius: 15px;
+margin-top: 2vh;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+display: flex;
+padding: 10px;
+}
+
+/* Изображение откликов */
+.fav-card img {
+width: 150px;
+height: 150px;
+object-fit: cover;
+margin-right: 15px;
+border-radius: 10%;
+}
+
+/* Тело карточки откликов */
+.fav-card-body {
+flex: 1;
+margin-left: 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.fav-card-body h5 {
+font-family: 'Arial', sans-serif;
+font-weight: bold;
+font-size: 1.25rem;
+color: #2c3e50;
+text-transform: uppercase;
+margin-bottom: 10px;
+}
+
+.form-label {
+font-size: 1rem;
+color: #555;
+}
+
+.localcount {
+margin-top: 10px;
+font-size: 1rem;
+font-weight: bold;
+color: #3166B6;
+background-color: white;
+border: 1px solid #ddd;
+width: 100px;
+text-align: center;
+border-radius: 5px;
+}
+
+.fav-btn-open {
+font-size: 1rem;
+background-color: #1890FF;
+color: white;
+padding: 10px 15px;
+border-radius: 5px;
+text-decoration: none;
+display: inline-block;
+margin-top: auto; /* Автоматический отступ сверху, чтобы кнопка отстояла от других элементов */
+margin-bottom: 10px !important; /* Контролирует отступ снизу */
+transition: background-color 0.3s;
+text-align: center;
+height: 40px;
+line-height: 1.5;
+align-self: flex-start; /* Выравнивание по левому краю */
+margin-left: -110px; /* Дополнительный отступ слева */
+}
+
+.fav-btn-open:hover {
+background-color: #0056b3;
+}
+
+
+
+
+
+

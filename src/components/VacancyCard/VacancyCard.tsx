@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Button, Card, Row, Col } from 'react-bootstrap';
 import "./VacancyCard.css";
 import defaultImage from "../../static/images/DefaultImage.jpg";
 import { useLocation } from 'react-router-dom';
-import { addVacancyToResponse, } from '../../slices/responseDraftSlice';
+import { addVacancyToResponse, updateVacancyResponseCount, } from '../../slices/responseDraftSlice';
 import { getVacanciesList } from '../../slices/vacanciesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
@@ -19,7 +19,6 @@ interface Props {
     peculiarities: string | undefined;
     url: string | null | undefined;
     imageClickHandler: () => void;
-    request: number;
     quantity?: number;
     isDraft?: boolean;
 }
@@ -34,33 +33,56 @@ export const VacancyCard: FC<Props> = ({
     peculiarities,
     url,
     imageClickHandler,
-    request,
     quantity,
     isDraft
 }) => {
     console.log('Image URL:', url); // Логируем URL изображения
 
     const { pathname } = useLocation();
+
     const id_response = useSelector((state: RootState) => state.responseDraft.id_response);
     const dispatch = useDispatch<AppDispatch>();
     const vacancies = useSelector((state: RootState) => state.responseDraft.vacancies);
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-    
+
+    const [localCount, setLocalCount] = useState(quantity);
+   
+    useEffect(() => {
+        setLocalCount(quantity);
+    }, [quantity]);
+
     // Обработчик события нажатия на кнопку "Добавить"
     const handleAdd = async () => {
         if (vacancy_id) {
             await dispatch(addVacancyToResponse(vacancy_id));
-            await dispatch(getVacanciesList()); // Для обновления отображения состояния иконки "корзины" 
+    
+            // Проверяем, что id_response и localCount определены перед использованием
+            if (id_response && localCount !== undefined) {
+                await dispatch(updateVacancyResponseCount({ idResponse: id_response, idVacancy: vacancy_id, quantity: localCount }));
+            }
+    
+            await dispatch(getVacanciesList()); // Для обновления состояния
         }
-    }
+    };
+    
 
     const handleDeleteVacancy = async () => {
         if (vacancy_id && id_response) {
             await dispatch(deleteVacancyFromResponse({ idResponse: id_response, idVacancy: vacancy_id }));
             dispatch(setVacancies(vacancies.filter(vacancy => vacancy.vacancy_id !== vacancy_id)));
+            setLocalCount(0); // сбрасываем количество после удаления
+        }
+    };
+    const handleChange = async (newCount: number | undefined) => {
+    if (newCount !== undefined && id_response !== undefined) {
+        setLocalCount(newCount);  // обновляем локальное состояние
+
+        // Проверяем, что id_response и newCount действительно числа
+        if (id_response && vacancy_id) {
+            await dispatch(updateVacancyResponseCount({ idResponse: id_response, idVacancy: vacancy_id, quantity: newCount }));
         }
     }
-
+};
 
     
     if (pathname === "/vacancies") {
@@ -100,7 +122,7 @@ export const VacancyCard: FC<Props> = ({
         );
     }
 
-    if (pathname.includes("/responses")) {
+    if (pathname.includes("/response")) {
         console.log({
             vacancy_id,
             vacancy_name,
@@ -121,12 +143,12 @@ export const VacancyCard: FC<Props> = ({
                         </div>
                     </Col>
                     <Col xs={10} sm={10} md={10}>
-                        <div className="fav-card-body">
-                        {vacancy_name ? (
+                        <div className="fav-card-body d-flex flex-column">
+                            {vacancy_name ? (
                             <h5 className="vacancy-name">{vacancy_name}</h5>
-                        ) : (
+                            ) : (
                             <p className="vacancy-name not-available">Название вакансии не указано</p>
-                        )}
+                            )}
 
 
                             <div className="form-group">
@@ -138,25 +160,28 @@ export const VacancyCard: FC<Props> = ({
                                         <input
                                             type="number"
                                             className="localcount"
-                                            value={quantity}
-                                            disabled
+                                            value={localCount}
+                                            onChange={(event => handleChange(Number(event.target.value)))}
+                                            disabled={!isDraft}
                                         />
                                     </Col>
                                 </Row>
                             </div>
                             <Row>
-                                <Col md={3} xs={3}>
-                                    <a onClick={() => imageClickHandler()} className="fav-btn-open">
-                                        Подробнее
-                                    </a>
-                                </Col>
-                                <Col md={3} xs={3}>
-                                {(isDraft) && (
-                                    <Button className="fav-btn-open" onClick={() => handleDeleteVacancy()}>
-                                        Удалить
-                                    </Button>
-                                )}
-                                </Col>
+                            <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
+                            <a onClick={() => imageClickHandler()} className="fav-btn-open">
+                                Подробнее
+                            </a>
+                            </Col>
+                            <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
+                            {(isDraft) && (
+                                <Button className="fav-btn-open" onClick={() => handleDeleteVacancy()} style={{ marginBottom: '10px' }}>
+                                Удалить
+                                </Button>
+                            )}
+                            </Col>
+
+
                             </Row>
                         </div>
                     </Col>

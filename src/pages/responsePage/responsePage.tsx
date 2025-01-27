@@ -1,6 +1,6 @@
 import "./responsePage.css";
 import { FC } from 'react';
-import { Col, Button, Form, Row, Image, Alert } from "react-bootstrap";
+import { Col, Button, Form} from "react-bootstrap";
 import { ROUTES } from '../../../Routes';
 import { VacancyCard } from '../../components/VacancyCard/VacancyCard';
 import Header from "../../components/Header/Header";
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { deleteResponse, getResponse, updateResponse} from '../../slices/responseDraftSlice';
+import { deleteResponse, getResponse, submittedResponse, updateResponse} from '../../slices/responseDraftSlice';
 import { setError, setResponseData} from '../../slices/responseDraftSlice';
 
 const ResponsePage: FC = () => {
@@ -21,35 +21,17 @@ const ResponsePage: FC = () => {
   const {
     vacancies,
     responseData,
-    error,
+    isDraft,
+    isLoading,
+    allowedForSubmitted,
   } = useSelector((state: RootState) => state.responseDraft);
-  const isDraft = useSelector((state: RootState) => state.responseDraft.isDraft);
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+  
 
   useEffect(() => {
     if (id_response) {
       dispatch(getResponse(id_response));
     }
   }, [id_response, dispatch]);
-  const handleCardClick = (vacancy_id: number | undefined) => {
-    navigate(`${ROUTES.VACANCIES}/${vacancy_id}`);
-  };
-
-  if (!vacancies || vacancies.length === 0) {
-    return <p>Нет вакансий для отображения</p>;
-  }
-  
-  const handleDelete = async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (id_response) {
-          try {
-              await dispatch(deleteResponse(id_response)).unwrap();
-              navigate(ROUTES.VACANCIES);
-          } catch (error) {
-              dispatch(setError(error));
-          }
-      }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -78,6 +60,41 @@ const ResponsePage: FC = () => {
   }
 
 
+  const handleCardClick = (vacancy_id: number | undefined) => {
+    navigate(`${ROUTES.VACANCIES}/${vacancy_id}`);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (id_response) {
+      try {
+        await dispatch(submittedResponse(id_response));
+        navigate(ROUTES.VACANCIES);
+      } catch (error) {
+        dispatch(setError(error));
+      }
+    }
+  };
+
+  
+  const handleDelete = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (id_response) {
+          try {
+              await dispatch(deleteResponse(id_response)).unwrap();
+              navigate(ROUTES.VACANCIES);
+          } catch (error) {
+              dispatch(setError(error));
+          }
+      }
+  };
+
+
+  if (!vacancies || vacancies.length === 0) {
+    return <p>Нет вакансий для отображения</p>;
+  }
+
+
   return (
     
     <div className="response-page-container">
@@ -96,7 +113,7 @@ const ResponsePage: FC = () => {
                 <h4>Комментарии: {responseData.peculiarities_comm}</h4>
               </div>
             ) : (
-              <div>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="name_human">
                   <h4>ФИО кандидата</h4>
                   <Form.Control
@@ -106,8 +123,8 @@ const ResponsePage: FC = () => {
                     onChange={handleInputChange}
                     required
                     disabled={!isDraft}
-                  />
-                </Form.Group>
+                    />
+                  </Form.Group>
 
                 <Form.Group controlId="education">
                   <h4>Образование</h4>
@@ -119,7 +136,7 @@ const ResponsePage: FC = () => {
                     rows={4}
                     required
                     disabled={!isDraft}
-                  />
+                    />
                 </Form.Group>
 
                 <Form.Group controlId="experience">
@@ -132,7 +149,7 @@ const ResponsePage: FC = () => {
                     rows={4}
                     required
                     disabled={!isDraft}
-                  />
+                    />
                 </Form.Group>
 
                 <Form.Group controlId="peculiarities_comm">
@@ -145,15 +162,17 @@ const ResponsePage: FC = () => {
                     rows={4}
                     required
                     disabled={!isDraft}
-                  />
+                    />
                 </Form.Group>
 
-                <Button type="submit" className="save-button" onClick={handleSaveVacancy}>
-                  Сохранить
+                <Button type="submit" disabled={isLoading || !isDraft} className="save-button" onClick={handleSaveVacancy}>
+                  {isLoading ? 'Обновляется...' : 'Сохранить изменения'}
                 </Button>
-              </div>
+              </Form>
             )}
-            <h1>Выбранные вакансии</h1>
+            <div style={{ height: '3vh'}}></div>
+            <h1>Выбранные города для размещения Вашей вакансии</h1>
+
             <div className="cards-wrapper-2 d-flex flex-column">
             {vacancies.length ? (
             vacancies.map((item) => (
@@ -168,7 +187,6 @@ const ResponsePage: FC = () => {
                   name_company={item.name_company}
                   peculiarities={item.peculiarities}
                   imageClickHandler={() => handleCardClick(item.vacancy_id)}
-                  request={item.request}
                   quantity={item.quantity}
                   isDraft={isDraft}
                 />
@@ -177,10 +195,15 @@ const ResponsePage: FC = () => {
                 ))
             ) : (
                 <section className="cities-not-found">
-                <h1>К сожалению, пока ничего не найдено :(</h1>
+                  <h1>К сожалению, пока ничего не найдено :(</h1>
                 </section>
             )}
             </div>
+            {(isDraft) && (
+              <Button className="save-button" onClick={handleSubmit} disabled={!isDraft || !allowedForSubmitted}>
+                Оформить
+              </Button>
+            )}
             {(isDraft) && (
               <Button className="save-button" onClick={handleDelete}>
                 Очистить

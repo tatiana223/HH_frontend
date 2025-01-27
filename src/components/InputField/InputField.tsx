@@ -19,7 +19,7 @@ const InputField: FC<Props> = ({ value, loading }) => {
 
     const isAuthenticated: boolean = useSelector((state: RootState) => state.user.isAuthenticated);
     const id_response = useSelector((state: RootState) => state.responseDraft.id_response);
-    const count = useSelector((state: RootState) => state.responseDraft.count);
+    const quantity = useSelector((state: RootState) => state.responseDraft.quantity);
 
     const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const InputField: FC<Props> = ({ value, loading }) => {
                 >
                     Отклики
                     <span className="badge badge-gray position-absolute top-0 start-100 translate-middle">
-                        {count || 0}
+                        {quantity || 0}
                     </span>
                 </div>
             )}
