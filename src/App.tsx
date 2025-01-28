@@ -10,7 +10,10 @@ import ResponsePage from "./pages/responsePage/responsePage"
 import ResponseHistoryPage from "./pages/ResponseHistoryPage/ResponseHistoryPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
-
+import VacanciesEditPage from "./pages/VacanciesEditPages/VacanciesEditPages";
+import VacancyEditPage from "./pages/VacancyEditPage/VacancyEditPage";
+import ForbiddenPage from "./pages/403/403";
+import NotFoundPage from "./pages/404/404";
 
 function App() {
 
@@ -26,6 +29,11 @@ function App() {
         <Route path={`${ROUTES.RESPONSE}/:id_response`} element={<ResponsePage />} />
         <Route path={`${ROUTES.RESPONSE}`} element={<ResponseHistoryPage />} />
         <Route path={`${ROUTES.PROFILE}`} element={< UserProfilePage/>} />
+        <Route path={`${ROUTES.VACANCIESEDIT}`} element={<VacanciesEditPage/>} />
+        <Route path={`${ROUTES.VACANCIESEDIT}/:id`} element={<VacancyEditPage/>} />
+        <Route path={`${ROUTES.VACANCIESCREATE}`} element={<VacancyEditPage/>} />
+        <Route path={`${ROUTES.FORBIDDEN}`} element={<ForbiddenPage/>} />
+        <Route path={`${ROUTES.NOTFOUND}`} element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
   );

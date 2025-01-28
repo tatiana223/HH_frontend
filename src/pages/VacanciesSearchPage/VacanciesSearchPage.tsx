@@ -34,7 +34,7 @@ const VacancyPage: FC = () => {
     <div style={{ minHeight: "100vh" }}>
       <Header />
       <div className="container-2">
-        <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.VACANCIES }]} />
+        <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.VACANCIES, path: ROUTES.VACANCIES }]} />
         <section className="vacancies-and-search">
           <main className="container">
             <Row>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../Routes';
 import Header from "../../components/Header/Header";
@@ -7,38 +7,49 @@ import { ROUTE_LABELS } from '../../../Routes';
 import { Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { fetchResponsesList, fetchResponse, setFilteredResponses} from '../../slices/responseSlice';
+import { fetchResponsesList, fetchResponse, setFilteredResponses } from '../../slices/responseSlice';
+import './ResponseHistoryPage.css';
 
-const POLLING_INTERVAL = 2000;
+const POLLING_INTERVAL = 50000;
 
-const VacancyApplicationHistoryPage = () => {
-    const [statusFilter, setStatusFilter] = useState<number>(NaN); 
+const ResponseHistoryPage = () => {
+    const [statusFilter, setStatusFilter] = useState<number | null>(null);
     const [startDate, setStartDate] = useState<string>(''); 
     const [endDate, setEndDate] = useState<string>(''); 
     const [creatorFilter, setCreatorFilter] = useState<string>(''); 
-    const [loading] = useState<boolean>(false); // Добавлено состояние loading
-
-    
-    //const isSuperUser = useSelector((state: RootState) => state.user.is_superuser);
-
+    const [loading, setLoading] = useState<boolean>(false); 
 
     const dispatch = useDispatch<AppDispatch>();
 
     const { responses, error } = useSelector((state: RootState) => state.response);
 
+    // Мемоизация запросов и данных, чтобы избегать излишней перерисовки
+    const filteredResponses = useMemo(() => {
+        let filtered = responses;
+        if (creatorFilter) {
+            filtered = filtered.filter((response) =>
+                response.creator.toLowerCase().includes(creatorFilter.toLowerCase())
+            );
+        }
+        return filtered;
+    }, [responses, creatorFilter]);
+
     const fetchResponses = async () => {
-        /*if (!isAuthenticated) {
-            navigate(`${ROUTES.FORBIDDEN}`);
-            return
-        }*/
-        dispatch(fetchResponsesList({
-            status: statusFilter || undefined,
-            date_submitted_start: startDate || undefined,
-            date_submitted_end: endDate || undefined
-        }));
+        setLoading(true);
+        try {
+            await dispatch(fetchResponsesList({
+                status: statusFilter ?? undefined,
+                date_submitted_start: startDate || undefined,
+                date_submitted_end: endDate || undefined
+            }));
+        } catch (error) {
+            console.error("Ошибка при получении откликов", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // Смена статуса
+    // Обработчик изменения статуса
     const handleStatusChange = async (idResponse: number, newStatus: number) => {
         try {
             await dispatch(fetchResponse({ idResponse: idResponse.toString(), status: newStatus }));
@@ -46,17 +57,6 @@ const VacancyApplicationHistoryPage = () => {
         } catch (error) {
             alert('Ошибка при обновлении статуса заявки');
         }
-    };
-
-    // Фильтрация по создателю на фронтенде
-    const filterResponses = () => {
-        let filtered = responses;
-        if (creatorFilter) {
-            filtered = filtered.filter((response) =>
-                response.creator.toLowerCase().includes(creatorFilter.toLowerCase())
-            );
-        }
-        dispatch(setFilteredResponses(filtered));
     };
 
     useEffect(() => {
@@ -68,10 +68,6 @@ const VacancyApplicationHistoryPage = () => {
         return () => clearInterval(intervalId); 
     }, [statusFilter, startDate, endDate]);
 
-    useEffect(() => {
-        filterResponses();
-    }, [creatorFilter]);
-
     return (
         <div>
             <Header />
@@ -81,13 +77,13 @@ const VacancyApplicationHistoryPage = () => {
                     <h1>Заявки на создание вакансий</h1>
                 </div>
                 <div className='page-container'>
-                    {/* Filters */}
+                    {/* Фильтры */}
                     <div className="filters mb-4">
                         <label>
                             Статус:
                             <select
-                                value={isNaN(statusFilter) ? "" : statusFilter}
-                                onChange={(e) => setStatusFilter(Number(e.target.value) || NaN)}
+                                value={statusFilter ?? ""}
+                                onChange={(e) => setStatusFilter(Number(e.target.value) || null)}
                             >
                                 <option value="">Все</option>
                                 <option value="1">Черновик</option>
@@ -96,7 +92,6 @@ const VacancyApplicationHistoryPage = () => {
                                 <option value="4">Завершена</option>
                                 <option value="5">Отклонена</option>
                             </select>
-
                         </label>
 
                         <label>
@@ -127,6 +122,7 @@ const VacancyApplicationHistoryPage = () => {
                         </label>
                     </div>
 
+                    {/* Загрузочный индикатор только для таблицы */}
                     {loading ? (
                         <div className="loader-container">
                             <div className="loader"></div>
@@ -152,7 +148,7 @@ const VacancyApplicationHistoryPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {responses.map((response) => (
+                                    {filteredResponses.map((response) => (
                                         <tr key={response.id_response}>
                                             <td>{response.id_response}</td>
                                             <td className={(response.status === 3 || response.status === 4) ? "status-completed" : "status-pending"}>
@@ -166,7 +162,7 @@ const VacancyApplicationHistoryPage = () => {
                                             <td>{response.peculiarities_comm}</td>
                                             <td>
                                                 <Link to={`${ROUTES.RESPONSE}/${response.id_response}`}>Просмотр</Link>
-                                                {/* Change Status buttons */}
+                                                {/* Кнопки изменения статуса */}
                                                 {response.status !== 4 && response.status !== 5 && (
                                                     <div className="mt-2">
                                                         <button
@@ -196,4 +192,4 @@ const VacancyApplicationHistoryPage = () => {
     );
 };
 
-export default VacancyApplicationHistoryPage;
+export default ResponseHistoryPage;

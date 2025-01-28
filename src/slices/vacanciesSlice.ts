@@ -52,6 +52,66 @@ export const getVacancy = createAsyncThunk(
   }
 );
 
+export const deleteVacancy = createAsyncThunk(
+  'vacancy/deleteVacancy',
+  async (id: string) => {
+    try {
+      await api.vacancies.vacanciesDeleteVacancyDelete(id);
+    } catch (error) {
+      throw new Error('Не удалось удалить город');
+    }
+  }
+);
+
+export const editVacacy = createAsyncThunk(
+  'vacancies/editVacancy',
+  async ({ id, vacancyData }: { id: string; vacancyData: Partial<Vacancies> }, { getState, rejectWithValue }) => {
+    const state: any = getState(); 
+    const existingVacancy = state.vacancies.vacancy; 
+
+    if (!existingVacancy) {
+      return rejectWithValue('Данные текущего города отсутствуют.');
+    }
+
+    const updatedVacancy: Vacancies = {
+      ...existingVacancy,
+      ...vacancyData,
+    };
+
+    try {
+      await api.vacancies.vacanciesEditVacancyUpdate(id, updatedVacancy); 
+      return updatedVacancy; 
+    } catch (error) {
+      return rejectWithValue('Не удалось сохранить изменения.');
+    }
+  }
+);
+
+export const updateVacancyImage = createAsyncThunk(
+  'vacancies/updateVacancyImage',
+  async ({ id, file }: { id: string; file: File }, { rejectWithValue }) => {
+    try {
+      const response = await api.vacancies.vacanciesUpdateImageCreate(id, { 'image' : file});
+
+      return response.data.url;
+    } catch (error) {
+      return rejectWithValue('Не удалось обновить изображение.');
+    }
+  }
+);
+
+export const createVacancy = createAsyncThunk(
+  'vacancies/createVacancy',
+  async (vacancyData: Vacancies, { rejectWithValue }) => {
+    try {
+      const response = await api.vacancies.vacanciesCreateVacancyCreate(vacancyData); 
+      return response.data.vacancy_id; 
+    } catch (error) {
+      return rejectWithValue('Не удалось сохранить изменения.');
+    }
+  }
+);
+
 const vacanciesSlice = createSlice({
   name: 'vacancies',
   initialState,
@@ -95,5 +155,5 @@ const vacanciesSlice = createSlice({
   },
 });
 
-export const { setSearchValue } = vacanciesSlice.actions;
+export const { setSearchValue, setVacancies } = vacanciesSlice.actions;
 export default vacanciesSlice.reducer;

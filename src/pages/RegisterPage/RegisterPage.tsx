@@ -7,7 +7,6 @@ import { BreadCrumbs } from "../../components/BreadCrumbs/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from '../../../Routes';
 import './RegisterPage.css';
 
-
 const RegisterPage: React.FC = () => {
 
   const [formData, setFormData] = useState<User>({

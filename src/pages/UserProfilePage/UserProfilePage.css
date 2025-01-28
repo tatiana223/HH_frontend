@@ -1,0 +1,82 @@
+.container-2 {
+    width: 100%; /* Занимает всю ширину экрана */
+    max-width: none; /* Отменяет ограничение ширины */
+    margin: 0; /* Убирает отступы по краям */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 900px; /* Минимальная высота контейнера */
+    display: flex;
+    flex-direction: column;
+   
+}
+
+
+.cities-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cities-title h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.username {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.change-email,
+.change-password {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.change-email label,
+.change-password label {
+    font-size: 16px;
+    color: #333;
+}
+
+.form-change {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.btn-change {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    align-self: flex-start;
+}
+
+.btn-change:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #d9534f;
+}

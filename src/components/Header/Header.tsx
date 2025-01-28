@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from '../../store';
 import { logoutUserAsync } from '../../slices/userSlice'; 
-import {  getVacanciesList } from '../../slices/vacanciesSlice'; 
+import {  getVacanciesList, setSearchValue } from '../../slices/vacanciesSlice'; 
 //import { setResponseId, setCount } from '../../slices/responseDraftSlice';
 
 const Header: React.FC = () => {
@@ -24,9 +24,7 @@ const Header: React.FC = () => {
     const handleExit = async ()  => {
         await dispatch(logoutUserAsync());
 
-        dispatch(logoutUserAsync())
-            .then(() => console.log('Запрос на logout отправлен'))
-            .catch((err) => console.error('Ошибка при отправке logout запроса:', err));
+        dispatch(setSearchValue(''));
         
         navigate('/vacancies'); // переход на страницу списка услуг
 
@@ -48,6 +46,12 @@ const Header: React.FC = () => {
                 {(isAuthenticated == false ) && (
                     <Link to={ROUTES.LOGIN}>
                         <Button className="login-btn">Войти</Button>
+                    </Link>
+                )}
+
+                {(isAuthenticated == false ) && (
+                    <Link to={ROUTES.REGISTER}>
+                        <Button className="login-btn">Регистрация</Button>
                     </Link>
                 )}
 
