@@ -113,7 +113,7 @@ export const VacancyCard: FC<Props> = ({
                         </Button>
                         {(isAuthenticated == true ) && (
                             <Button className="add-btn" onClick={() => handleAdd() }>
-                                Добавить
+                                Откликнуться
                             </Button>
                         )}
                     </div>

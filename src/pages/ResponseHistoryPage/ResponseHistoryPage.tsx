@@ -53,11 +53,20 @@ const ResponseHistoryPage = () => {
     const handleStatusChange = async (idResponse: number, newStatus: number) => {
         try {
             await dispatch(fetchResponse({ idResponse: idResponse.toString(), status: newStatus }));
-            fetchResponses(); 
+            
+            // Обновляем состояние откликов в Redux без дополнительного запроса
+            const updatedResponses = responses.map((response) => 
+                response.id_response === idResponse
+                    ? { ...response, status: newStatus }
+                    : response
+            );
+            dispatch(setFilteredResponses(updatedResponses));
+    
         } catch (error) {
             alert('Ошибка при обновлении статуса заявки');
         }
     };
+    
 
     useEffect(() => {
         fetchResponses();
@@ -139,12 +148,14 @@ const ResponseHistoryPage = () => {
                                         <th>Номер заявки</th>
                                         <th>Статус</th>
                                         <th>Создатель</th>
+                                        <th>Дата интервью</th>
                                         <th>Дата формирования</th>
-                                        <th>Название вакансии</th>
-                                        <th>Требования</th>
-                                        <th>Обязанности</th>
-                                        <th>Длительность</th>
+                                        <th>ФИО кандидата</th>
+                                        <th>Образование</th>
+                                        <th>Опыт работы</th>
+                                        <th>Комментарии</th>
                                         <th>Действия</th>
+                                        <th>QR_code</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -156,6 +167,7 @@ const ResponseHistoryPage = () => {
                                             </td>
                                             <td>{response.creator}</td>
                                             <td>{response.interview_date ? new Date(response.interview_date).toLocaleString() : '—'}</td>
+                                            <td>{response.created_at}</td>
                                             <td>{response.name_human}</td>
                                             <td>{response.education}</td>
                                             <td>{response.experience}</td>
@@ -180,6 +192,14 @@ const ResponseHistoryPage = () => {
                                                     </div>
                                                 )}
                                              </td>
+                                             <td>
+                                                {response.qr ? (
+                                                    <img src={`data:image/png;base64,${response.qr}`} alt="QR-код" style={{ width: 100, height: 100 }} />
+                                                ) : (
+                                                    "Нет QR-кода"
+                                                )}
+                                            </td>
+
                                         </tr>
                                     ))}
                                 </tbody>

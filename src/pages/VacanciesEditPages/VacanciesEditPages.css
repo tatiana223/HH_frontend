@@ -1,0 +1,135 @@
+/* General page container */
+.container-2 {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 13000px;
+}
+
+/* Title section */
+.cities-title h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Table container */
+.page-container {
+    margin-top: 30px;
+}
+
+/* Alert style */
+.alert {
+    width: 15vw;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Table styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.table td {
+    background-color: #fff;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Image in table */
+.vacanciesTable {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+}
+
+/* Image in table */
+.vacanciesTable img {
+    max-width: 100%; /* Ограничивает ширину изображения размером колонки */
+    height: auto; /* Сохраняет пропорции изображения */
+    object-fit: cover; /* Убедитесь, что изображение выглядит хорошо внутри выделенной области */
+}
+
+/* Button styles */
+.edit-button, .delete-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    margin-right: 10px; /* Увеличен отступ между кнопками */
+    margin-bottom: 5px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.edit-button:hover, .delete-button:hover {
+    opacity: 0.8;
+}
+
+/* Add vacancy button */
+.login-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.login-btn:hover {
+    background-color: #007bff;
+}
+
+/* Bottom spacing */
+div[style*="height: 15vh"] {
+    height: 15vh;
+}
+
+/* Table layout responsiveness */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .table th, .table td {
+        padding: 8px 10px;
+    }
+
+    .vacanciesTable {
+        width: 80px;
+        height: 50px;
+    }
+
+    .login-btn {
+        width: 100%;
+    }
+}

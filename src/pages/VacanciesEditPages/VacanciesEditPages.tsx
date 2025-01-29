@@ -65,10 +65,12 @@ const VacanciesEditPage: React.FC = () => {
                                 <tr>
                                     <th>Название</th>
                                     <th>Изображение</th>
-                                    <th>Население</th>
-                                    <th>Средняя зарплата</th>
-                                    <th>Уровень безработицы</th>
                                     <th>Описание</th>
+                                    <th>Зарплата от</th>
+                                    <th>Зарплата до</th>
+                                    <th>Город</th>
+                                    <th>Название компании</th>
+                                    <th>Комментарии</th>
                                     <th>Действия</th>
                                 </tr>
                             </thead>
@@ -76,10 +78,12 @@ const VacanciesEditPage: React.FC = () => {
                                 {vacancies.map((vacancy) => (
                                     <tr key={vacancy.vacancy_id}>
                                         <td>{vacancy.vacancy_name}</td>
-                                        <td><div className="vacanciesTable">
-                                                <Image src={vacancy.url || defaultImage} alt={vacancy.vacancy_name}></Image>
+                                        <td>
+                                            <div className="vacanciesTable">
+                                                <img src={vacancy.url || defaultImage} alt={vacancy.vacancy_name} />
                                             </div>
                                         </td>
+
                                         <td>{vacancy.description}</td>
                                         <td>{vacancy.money_from}</td>
                                         <td>{vacancy.money_to}</td>
@@ -96,7 +100,7 @@ const VacanciesEditPage: React.FC = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <button onClick={handleAddVacancy} className='login-btn'>Добавить город</button>
+                        <button onClick={handleAddVacancy} className='login-btn'>Добавить вакансию</button>
                         <div style={{ height: '15vh'}}></div>
                     </div>
                 </div>

@@ -171,7 +171,7 @@ const ResponsePage: FC = () => {
               </Form>
             )}
             <div style={{ height: '3vh'}}></div>
-            <h1>Выбранные города для размещения Вашей вакансии</h1>
+            <h1>Выбранные вакансии</h1>
 
             <div className="cards-wrapper-2 d-flex flex-column">
             {vacancies.length ? (
