@@ -102,7 +102,7 @@ const ResponsePage: FC = () => {
         <div className="container-2">
             <div style={{ width: '100%', height: '100%', padding: '0', margin: '0' }}>
             <div style={{ backgroundColor: '#f9f9f9', padding: '20px', width: '100%' }}>
-                <h1>Вакансия</h1>
+                <h1>Резюме</h1>
             </div>
             </div>
             {(!isDraft) ? (

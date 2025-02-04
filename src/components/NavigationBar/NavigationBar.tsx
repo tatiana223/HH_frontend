@@ -23,10 +23,10 @@ export const NavigationBar = () => {
             <NavLink to={ROUTES.HOME} className='nav__link'>Главная</NavLink>
             <NavLink to={ROUTES.VACANCIES} className='nav__link'>Доступные вакансии</NavLink>
             {(isAuthenticated == true ) && (
-              <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание вакансий</NavLink>
+              <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание откликоа</NavLink>
             )}
             {((isSuperUser == true)) && (
-              <NavLink to={ROUTES.VACANCIESEDIT} className='nav__link'>Управление вакансии</NavLink>
+              <NavLink to={ROUTES.VACANCIESEDIT} className='nav__link'>Управление вакансией</NavLink>
             )}
           </div>
           <div className='nav__mobile-wrapper' onClick={(event) => event.currentTarget.classList.toggle('active')}>
@@ -36,7 +36,7 @@ export const NavigationBar = () => {
               <NavLink to={ROUTES.HOME} className='nav__link'>Главная</NavLink>
               <NavLink to={ROUTES.VACANCIES} className='nav__link'>Доступные вакансии</NavLink>
               {(isAuthenticated == true ) && (
-                <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание вакансий</NavLink>
+                <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание откликов</NavLink>
               ) }
             </div>
           </div>

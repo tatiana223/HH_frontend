@@ -29,7 +29,7 @@ const initialState: ResponseState = {
 };
 
 export const fetchResponsesList = createAsyncThunk(
-  'responses/fetchResponsesList',  // Уникальное имя для этого действия
+  'responses/fetchResponsesList',  
   async (filters: { status: number | undefined; date_submitted_start: string | undefined; date_submitted_end: string | undefined }) => {
     const { status, date_submitted_start, date_submitted_end } = filters;
     try {
@@ -47,24 +47,11 @@ export const fetchResponsesList = createAsyncThunk(
 
 export const fetchResponse = createAsyncThunk(
   'responses/fetchResponseStatusUpdate',  // Уникальное имя для этого действия
-  async (credentials: { idResponse: string, status: number }, { dispatch, getState }) => {
+  async (credintials: { responseId: string, status: number }) => {
     try {
-      await api.responses.responsesUpdateStatusAdminUpdate(credentials.idResponse, { status: credentials.status });
-
-      // Получаем актуальный список откликов из Redux
-      const state = getState() as { response: ResponseState };
-      const updatedResponses = state.response.responses.map((response) =>
-        response.id_response === parseInt(credentials.idResponse)
-          ? { ...response, status: credentials.status }
-          : response
-      );
-
-      // Возвращаем обновленные данные
-      dispatch(setFilteredResponses(updatedResponses)); // Обновляем данные откликов в Redux
-
-      return updatedResponses; // Возвращаем обновленные отклики
+      await api.responses.responsesUpdateStatusAdminUpdate(credintials.responseId, {status: credintials.status});
     } catch (error) {
-      throw new Error('Ошибка при обновлении отклика');
+      throw new Error('Ошибка при загрузке заявок');
     }
   }
 );
@@ -91,11 +78,6 @@ const ResponseSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Произошла ошибка';
       })
-      .addCase(fetchResponse.fulfilled, (state, action) => {
-        state.loading = false;
-        // Обновляем отклики в случае успешного изменения статуса
-        state.responses = action.payload;
-      });
   },
 });
 

@@ -135,58 +135,60 @@ export const VacancyCard: FC<Props> = ({
         });
         
         return (
-            <div className="fav-card">
-                <Row>
-                    <Col xs={2} sm={2} md={2}>
-                        <div className="d-flex justify-center">
-                            <img src={url || defaultImage} alt={vacancy_name} />
-                        </div>
-                    </Col>
-                    <Col xs={10} sm={10} md={10}>
-                        <div className="fav-card-body d-flex flex-column">
-                            {vacancy_name ? (
-                            <h5 className="vacancy-name">{vacancy_name}</h5>
-                            ) : (
-                            <p className="vacancy-name not-available">Название вакансии не указано</p>
-                            )}
+            <div className="response-page">
+                <div className="fav-card">
+                    <Row>
+                        <Col xs={2} sm={2} md={2}>
+                            <div className="d-flex justify-center">
+                                <img src={url || defaultImage} alt={vacancy_name} />
+                            </div>
+                        </Col>
+                        <Col xs={10} sm={10} md={10}>
+                            <div className="fav-card-body d-flex flex-column">
+                                {vacancy_name ? (
+                                <h5 className="vacancy-name">{vacancy_name}</h5>
+                                ) : (
+                                <p className="vacancy-name not-available">Название вакансии не указано</p>
+                                )}
 
 
-                            <div className="form-group">
+                                <div className="form-group">
+                                    <Row>
+                                        <Col xs={3} sm={3} md={3}>
+                                            <label className="form-label">Количество вакансий: </label>
+                                        </Col>
+                                        <Col xs={9} sm={9} md={9}>
+                                            <input
+                                                type="number"
+                                                className="localcount"
+                                                value={localCount}
+                                                onChange={(event => handleChange(Number(event.target.value)))}
+                                                disabled={!isDraft}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </div>
                                 <Row>
-                                    <Col xs={3} sm={3} md={3}>
-                                        <label className="form-label">Количество вакансий: </label>
-                                    </Col>
-                                    <Col xs={9} sm={9} md={9}>
-                                        <input
-                                            type="number"
-                                            className="localcount"
-                                            value={localCount}
-                                            onChange={(event => handleChange(Number(event.target.value)))}
-                                            disabled={!isDraft}
-                                        />
-                                    </Col>
+                                <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
+                                <a onClick={() => imageClickHandler()} className="fav-btn-open">
+                                    Подробнее
+                                </a>
+                                </Col>
+                                <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
+                                {(isDraft) && (
+                                    <Button className="fav-btn-open" onClick={() => handleDeleteVacancy()} style={{ marginBottom: '10px' }}>
+                                    Удалить
+                                    </Button>
+                                )}
+                                </Col>
+
+
                                 </Row>
                             </div>
-                            <Row>
-                            <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
-                            <a onClick={() => imageClickHandler()} className="fav-btn-open">
-                                Подробнее
-                            </a>
-                            </Col>
-                            <Col md={3} xs={3} className="d-flex justify-content-center align-items-center" style={{ marginBottom: '10px' }}>
-                            {(isDraft) && (
-                                <Button className="fav-btn-open" onClick={() => handleDeleteVacancy()} style={{ marginBottom: '10px' }}>
-                                Удалить
-                                </Button>
-                            )}
-                            </Col>
-
-
-                            </Row>
-                        </div>
-                    </Col>
-                    
-                </Row>
+                        </Col>
+                        
+                    </Row>
+                </div>
             </div>
         );
     }

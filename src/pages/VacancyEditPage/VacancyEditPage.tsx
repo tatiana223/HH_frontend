@@ -59,10 +59,12 @@ const VacancyEditPage: React.FC = () => {
 
     const handleFieldChange = (field: keyof Vacancies, value: any) => {
         if (field === 'money_from' || field === 'money_to') {
-            value = value && !isNaN(value) ? parseFloat(value) : 0;
+            value = value && !isNaN(value) ? parseFloat(value) : 0;  // Convert to a number
         }
         setVacancyData((prev) => (prev ? { ...prev, [field]: value } : null));
     };
+    
+    
 
     const handleSaveChanges = async () => {
         if (vacancyData && id) {
@@ -212,9 +214,29 @@ const VacancyEditPage: React.FC = () => {
                                 onChange={(e) => setNewVacancy({ ...newVacancy, description: e.target.value })}
                             />
                             <textarea
+                                placeholder="минимальная зарплата"
+                                value={newVacancy.money_from || ''}
+                                onChange={(e) => setNewVacancy({ ...newVacancy, money_from: e.target.value })}
+                            />
+                            <textarea
+                                placeholder="максимальная зарплата"
+                                value={newVacancy.money_to || ''}
+                                onChange={(e) => setNewVacancy({ ...newVacancy, money_to: e.target.value })}
+                            />
+                            <textarea
                                 placeholder="Город"
                                 value={newVacancy.city || ''}
                                 onChange={(e) => setNewVacancy({ ...newVacancy, city: e.target.value })}
+                            />
+                            <textarea
+                                placeholder="Название компании"
+                                value={newVacancy.name_company || ''}
+                                onChange={(e) => setNewVacancy({ ...newVacancy, name_company: e.target.value })}
+                            />
+                            <textarea
+                                placeholder="Особенности"
+                                value={newVacancy.peculiarities || ''}
+                                onChange={(e) => setNewVacancy({ ...newVacancy, peculiarities: e.target.value })}
                             />
                             <button onClick={handleAddCity}>Создать вакансию</button>
                         </>

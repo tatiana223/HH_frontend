@@ -55,7 +55,7 @@ const VacanciesEditPage: React.FC = () => {
             <div className="container-2">
                 <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.VACANCIESEDIT, path: ROUTES.VACANCIESEDIT }]} />
                 <div className="cities-title">
-                    <h1>Управление городами</h1>
+                    <h1>Управление вакансиями</h1>
                 </div>
                 <div className="page-container">
                     {error && <Alert variant="danger" style={{ width: '15vw'}}>{error}</Alert>}

@@ -7,6 +7,7 @@ import { ROUTE_LABELS } from '../../../Routes';
 import { Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
+import { useNavigate } from "react-router-dom";
 import { fetchResponsesList, fetchResponse, setFilteredResponses } from '../../slices/responseSlice';
 import './ResponseHistoryPage.css';
 
@@ -17,55 +18,53 @@ const ResponseHistoryPage = () => {
     const [startDate, setStartDate] = useState<string>(''); 
     const [endDate, setEndDate] = useState<string>(''); 
     const [creatorFilter, setCreatorFilter] = useState<string>(''); 
-    const [loading, setLoading] = useState<boolean>(false); 
-
+ 
+    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
     const dispatch = useDispatch<AppDispatch>();
 
     const { responses, error } = useSelector((state: RootState) => state.response);
 
+    const navigate = useNavigate();
+    
     // Мемоизация запросов и данных, чтобы избегать излишней перерисовки
-    const filteredResponses = useMemo(() => {
+    const filterResponses = () => {
         let filtered = responses;
         if (creatorFilter) {
-            filtered = filtered.filter((response) =>
-                response.creator.toLowerCase().includes(creatorFilter.toLowerCase())
+            filtered = filtered.filter((item) =>
+                item.creator.toLowerCase().includes(creatorFilter.toLowerCase())
             );
         }
-        return filtered;
-    }, [responses, creatorFilter]);
+        
+        dispatch(setFilteredResponses(filtered));
+    };
 
     const fetchResponses = async () => {
-        setLoading(true);
-        try {
-            await dispatch(fetchResponsesList({
-                status: statusFilter ?? undefined,
-                date_submitted_start: startDate || undefined,
-                date_submitted_end: endDate || undefined
-            }));
-        } catch (error) {
-            console.error("Ошибка при получении откликов", error);
-        } finally {
-            setLoading(false);
+        if (!isAuthenticated) {
+            navigate(`${ROUTES.FORBIDDEN}`);
+            return
         }
+        dispatch(fetchResponsesList({
+            status: statusFilter || undefined,
+            date_submitted_start: startDate || undefined,
+            date_submitted_end: endDate || undefined
+        }));
+        
     };
+    console.log('Filters:', filterResponses);  // Добавьте лог для проверки фильтров
+
+
 
     // Обработчик изменения статуса
     const handleStatusChange = async (idResponse: number, newStatus: number) => {
         try {
-            await dispatch(fetchResponse({ idResponse: idResponse.toString(), status: newStatus }));
-            
-            // Обновляем состояние откликов в Redux без дополнительного запроса
-            const updatedResponses = responses.map((response) => 
-                response.id_response === idResponse
-                    ? { ...response, status: newStatus }
-                    : response
-            );
-            dispatch(setFilteredResponses(updatedResponses));
-    
+            await dispatch(fetchResponse({ responseId: idResponse.toString(), status: newStatus }));
+            fetchResponses(); 
         } catch (error) {
             alert('Ошибка при обновлении статуса заявки');
         }
     };
+    
+
     
 
     useEffect(() => {
@@ -77,13 +76,17 @@ const ResponseHistoryPage = () => {
         return () => clearInterval(intervalId); 
     }, [statusFilter, startDate, endDate]);
 
+    useEffect(() => {
+        filterResponses();
+    }, [creatorFilter]);
+
     return (
         <div>
             <Header />
             <div className="container-2">
                 <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.RESPONSE, path: ROUTES.RESPONSE }]} />
                 <div className="cities-title">
-                    <h1>Заявки на создание вакансий</h1>
+                    <h1>Заявки на создание откликов</h1>
                 </div>
                 <div className='page-container'>
                     {/* Фильтры */}
@@ -130,82 +133,71 @@ const ResponseHistoryPage = () => {
                             />
                         </label>
                     </div>
-
-                    {/* Загрузочный индикатор только для таблицы */}
-                    {loading ? (
-                        <div className="loader-container">
-                            <div className="loader"></div>
-                        </div>
-                    ) : error ? (
-                        <div>
-                            {error && <Alert variant="danger" style={{ width: '15vw'}}>{error}</Alert>}
-                        </div>
-                    ) : (
-                        <div className="table-container">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>Номер заявки</th>
-                                        <th>Статус</th>
-                                        <th>Создатель</th>
-                                        <th>Дата интервью</th>
-                                        <th>Дата формирования</th>
-                                        <th>ФИО кандидата</th>
-                                        <th>Образование</th>
-                                        <th>Опыт работы</th>
-                                        <th>Комментарии</th>
-                                        <th>Действия</th>
-                                        <th>QR_code</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredResponses.map((response) => (
-                                        <tr key={response.id_response}>
-                                            <td>{response.id_response}</td>
-                                            <td className={(response.status === 3 || response.status === 4) ? "status-completed" : "status-pending"}>
-                                                {response.status === 3 ? 'Сформирован' : response.status === 4 ? 'Завершен' : 'Отклонен'}
+                    <div>
+                        {error && <Alert variant="danger" style={{ width: '15vw'}}>{error}</Alert>}
+                    </div>
+                    <div className="table-container">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Номер заявки</th>
+                                    <th>Статус</th>
+                                    <th>Создатель</th>
+                                    <th>Дата формирования</th>
+                                    <th>ФИО кандидата</th>
+                                    <th>Образование</th>
+                                    <th>Опыт работы</th>
+                                    <th>Комментарии</th>
+                                    <th>Действия</th>
+                                    <th>QR_code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {responses.map((response) => (
+                                    <tr key={response.id_response}>
+                                        <td>{response.id_response}</td>
+                                        <td className={(response.status === 3 || response.status === 4) ? "status-completed" : "status-pending"}>
+                                            {response.status === 3 ? 'Сформирован' : response.status === 4 ? 'Завершен' : 'Отклонен'}
+                                        </td>
+                                        <td>{response.creator}</td>
+                                        <td>{response.created_at ? new Date(response.created_at).toLocaleString() : '—'}</td>
+                                        <td>{response.name_human}</td>
+                                        <td>{response.education}</td>
+                                        <td>{response.experience}</td>
+                                        <td>{response.peculiarities_comm}</td>
+                                        <td>
+                                            <Link to={`${ROUTES.RESPONSE}/${response.id_response}`}>Просмотр</Link>
+                                            {/* Кнопки изменения статуса */}
+                                            {response.status !== 4 && response.status !== 5 && (
+                                                <div className="mt-2">
+                                                    <button
+                                                        onClick={() => handleStatusChange(response.id_response!, 4)} 
+                                                        className="edit-button"
+                                                    >
+                                                        Завершить
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleStatusChange(response.id_response!, 5)}
+                                                        className="edit-button"
+                                                    >
+                                                        Отклонить
+                                                    </button>
+                                                </div>
+                                            )}
                                             </td>
-                                            <td>{response.creator}</td>
-                                            <td>{response.interview_date ? new Date(response.interview_date).toLocaleString() : '—'}</td>
-                                            <td>{response.created_at}</td>
-                                            <td>{response.name_human}</td>
-                                            <td>{response.education}</td>
-                                            <td>{response.experience}</td>
-                                            <td>{response.peculiarities_comm}</td>
                                             <td>
-                                                <Link to={`${ROUTES.RESPONSE}/${response.id_response}`}>Просмотр</Link>
-                                                {/* Кнопки изменения статуса */}
-                                                {response.status !== 4 && response.status !== 5 && (
-                                                    <div className="mt-2">
-                                                        <button
-                                                            onClick={() => handleStatusChange(response.id_response!, 4)} 
-                                                            className="edit-button"
-                                                        >
-                                                            Завершить
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleStatusChange(response.id_response!, 5)}
-                                                            className="edit-button"
-                                                        >
-                                                            Отклонить
-                                                        </button>
-                                                    </div>
-                                                )}
-                                             </td>
-                                             <td>
-                                                {response.qr ? (
-                                                    <img src={`data:image/png;base64,${response.qr}`} alt="QR-код" style={{ width: 100, height: 100 }} />
-                                                ) : (
-                                                    "Нет QR-кода"
-                                                )}
-                                            </td>
+                                            {response.qr ? (
+                                                <img src={`data:image/png;base64,${response.qr}`} alt="QR-код" style={{ width: 100, height: 100 }} />
+                                            ) : (
+                                                "Нет QR-кода"
+                                            )}
+                                        </td>
 
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

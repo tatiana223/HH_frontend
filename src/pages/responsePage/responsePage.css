@@ -1,11 +1,11 @@
 /* Основной контейнер страницы */
 .response-page-container {
   background-color: #f8f9fa;
-  min-height: 100vh;
+  min-height: 250vh; /* Увеличиваем минимальную высоту контейнера */
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0; /* Убираем внешний отступ */
+  margin: 0;
 }
 
 /* Заголовок страницы */
