@@ -34,7 +34,7 @@ const VacancyPage: FC = () => {
     <div style={{ minHeight: "100vh" }}>
       <Header />
       <div className="container-2">
-        <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.VACANCIES }]} />
+        <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.VACANCIES, path: ROUTES.VACANCIES }]} />
         <section className="vacancies-and-search">
           <main className="container">
             <Row>
@@ -60,7 +60,6 @@ const VacancyPage: FC = () => {
                         vacancy_id={item.vacancy_id}
                         url={item.url}
                         vacancy_name={item.vacancy_name}
-                        description={item.description}
                         money_from={item.money_from}
                         money_to={item.money_to}
                         city={item.city}

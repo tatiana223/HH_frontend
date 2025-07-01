@@ -1,33 +1,46 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { ROUTES } from '../../../Routes';
-import "./NavigationBar.css";
+import {NavLink} from "react-router-dom"
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../Routes";
 import { useSelector } from 'react-redux'; 
+import './NavigationBar.css'
 import { RootState } from '../../store';
 
-export function NavigationBar() {
+export const NavigationBar = () => {
+
   const username = useSelector((state: RootState) => state.user.username);
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated); 
+  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+  const isSuperUser = useSelector((state: RootState) => state.user.is_superuser);
 
   return (
-    <Navbar bg="light" expand="lg" className="navbar-container">
-      <Container className="flex-column">
-        <Navbar.Brand href={ROUTES.HOME} className="navbar-brand">HH</Navbar.Brand>
-        <div className="navbar-underline"></div>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="navbar-nav flex-column">
-            <Nav.Link href={ROUTES.HOME} className="nav-link">Главная</Nav.Link>
-            <Nav.Link href={ROUTES.VACANCIES} className="nav-link">Доступные вакансии</Nav.Link>
-            {isAuthenticated && (
-              <Nav.Link href={ROUTES.PROFILE} className="nav-profile">
-                {username || "Профиль"}
-              </Nav.Link>
+      <nav className='nav'>
+        <div className='nav__wrapper'>
+          <Navbar.Brand as={Link} to={ROUTES.HOME} className="navbar-brand">
+            HH
+          </Navbar.Brand>
+          <div className='nav__links'>
+            <NavLink to={ROUTES.PROFILE} className='nav__link'>{ username }</NavLink>
+            <NavLink to={ROUTES.HOME} className='nav__link'>Главная</NavLink>
+            <NavLink to={ROUTES.VACANCIES} className='nav__link'>Доступные вакансии</NavLink>
+            {(isAuthenticated == true ) && (
+              <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание откликоа</NavLink>
             )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
+            {((isSuperUser == true)) && (
+              <NavLink to={ROUTES.VACANCIESEDIT} className='nav__link'>Управление вакансией</NavLink>
+            )}
+          </div>
+          <div className='nav__mobile-wrapper' onClick={(event) => event.currentTarget.classList.toggle('active')}>
+            <div className='nav__mobile-target' />
+            <div className='nav__mobile-menu'>
+              <NavLink to={ROUTES.PROFILE} className='nav__link'>{ username }</NavLink>
+              <NavLink to={ROUTES.HOME} className='nav__link'>Главная</NavLink>
+              <NavLink to={ROUTES.VACANCIES} className='nav__link'>Доступные вакансии</NavLink>
+              {(isAuthenticated == true ) && (
+                <NavLink to={ROUTES.RESPONSE} className='nav__link'>Заявки на создание откликов</NavLink>
+              ) }
+            </div>
+          </div>
+        </div>
+      </nav>
+  )
 }

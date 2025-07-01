@@ -1,70 +1,91 @@
-
-.navbar-container {
+/* Основной стиль для навигации */
+.nav {
     position: fixed;
-    top: calc(200px + 350px); /* Хедер + дополнительный отступ */
-    right: 0;
+    bottom: 0; /* Фиксация панели внизу */
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Тень сверху */
     z-index: 1000;
-    width: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: auto;
-    padding-top: 16px;
-}
-
-
-.navbar-brand {
+    padding: 16px 0;
+  }
+  
+  /* Обертка для всех элементов навигации */
+  .nav__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+  }
+  
+  /* Стиль для бренда */
+  .navbar-brand {
     font-weight: bold;
     color: #CF0000;
     font-size: 25px;
-    transition: color 0.3s ease;
     font-family: 'Arial', sans-serif;
-}
-
-.navbar-brand:hover {
-    color:#940000
-}
-
-.navbar-underline {
-    width: 100%;
-    height: 2px;
-    background-color: red;
-    margin-top: 0;
-}  
-
-.navbar-nav {
+  }
+  
+  /* Стили для ссылок */
+  .nav__links {
     display: flex;
-    margin-left: 0;  /* Убираем стандартные отступы слева */
-}
-
-.navbar-nav .nav-link {
-    display: block;  /* занимать всю ширину */
-    padding: 8px 0; 
+    gap: 24px;
+  }
+  
+  .nav__link {
     color: black;
     font-size: 18px;
     font-family: 'Arial', sans-serif;
     font-weight: bold;
-}
-
-.navbar-nav .nav-link:hover {
-    color: gray;  /* Цвет при наведении */
-}
-
-/* Основной стиль для ссылки профиля */
-.nav-profile {
-    display: inline-block;
-    color: black;
-    font-size: 18px;
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    margin-right: 16px;
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.nav-profile:hover {
+    transition: color 0.3s;
+  }
+  
+  .nav__link:hover {
     color: gray; /* Цвет при наведении */
-}
-
-/* Дополнительный отступ между элементами навигации */
-.navbar-nav .nav-link:not(:last-child) {
-    margin-bottom: 8px;
-}
+  }
+  
+  /* Мобильная версия: скрытие меню по умолчанию */
+  .nav__mobile-wrapper {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .nav__mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .nav__mobile-target {
+    width: 24px;
+    height: 24px;
+    background-color: #CF0000;
+    border-radius: 4px;
+    transition: transform 0.3s;
+  }
+  
+  /* Активное состояние меню */
+  .nav__mobile-wrapper.active .nav__mobile-menu {
+    display: flex;
+  }
+  
+  .nav__mobile-wrapper.active .nav__mobile-target {
+    transform: rotate(90deg);
+  }
+  
+  /* Для мобильных экранов: показываем мобильное меню */
+  @media (max-width: 768px) {
+    .nav__links {
+      display: none;
+    }
+  
+    .nav__mobile-wrapper {
+      display: flex;
+    }
+  }
+  

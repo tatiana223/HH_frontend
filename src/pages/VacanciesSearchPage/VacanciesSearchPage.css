@@ -63,90 +63,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 100%;
+  max-width: 500px; /* Увеличиваем максимальную ширину карточки */
+  width: 100%;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
-
 .card:hover {
   transform: scale(1.05); /* Плавное увеличение карточки при наведении */
 }
-
-.card-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-top: 10px;
-}
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card-description {
-  font-size: 1rem;
-  margin-top: 10px;
-  color: #555;
-  flex-grow: 1; /* Раздвигаем описание для адаптации */
-}
-
-.card-btn {
-  background-color: #007bff;
-  color: white;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-  text-align: center;
-}
-
-.card-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Стиль для кнопки "Откликнуться" */
-.btn-favorites {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 58px;
-  height: 58px;
-  position: relative;
-  margin-top: 15px;
-  margin-left: 10px;
-}
-
-.btn-favorites button {
-  background-color: #2368f0;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  border: none;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-favorites button:hover {
-  background-color: hsl(222, 76%, 48%);
-}
-
 
 
 /* Адаптивность для мобильных экранов */

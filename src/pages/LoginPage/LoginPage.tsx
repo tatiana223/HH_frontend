@@ -6,6 +6,7 @@ import { loginUserAsync } from '../../slices/userSlice';
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import { ROUTES } from '../../../Routes';
+import "./LoginPage.css";
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -29,13 +30,13 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <Container style={{ maxWidth: '100%', marginTop: '0' }}> 
+        <Container className="login-page"> 
             <Header/>
-            <Container style={{ maxWidth: '400px', marginTop: '150px' }}>
-                <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Рады снова Вас видеть!</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
+            <Container className="login-container">
+                <h2 className="login-title">Рады снова Вас видеть!</h2>
+                {error && <Alert variant="danger" className="login-error">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="username" style={{ marginBottom: '15px' }}>
+                    <Form.Group controlId="username">
                         <Form.Label>Имя пользователя</Form.Label>
                         <Form.Control
                             type="text"
@@ -45,7 +46,7 @@ const LoginPage: React.FC = () => {
                             placeholder="Введите имя пользователя"
                         />
                     </Form.Group>
-                    <Form.Group controlId="password" style={{ marginBottom: '20px' }}>
+                    <Form.Group controlId="password">
                         <Form.Label>Пароль</Form.Label>
                         <Form.Control
                             type="password"
@@ -55,7 +56,7 @@ const LoginPage: React.FC = () => {
                             placeholder="Введите пароль"
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit" style={{ width: '100%' }}>
+                    <Button variant="primary" type="submit" className="login-button">
                         Войти
                     </Button>
                 </Form>
